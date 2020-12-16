@@ -5,13 +5,12 @@ from flask import jsonify
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/api/*": {"Access-Control-Allow-Origin": "*"}})
+cors = CORS(app, resources={r"/api/*": {"Access-Control-Allow-Origin": "127.0.0.1"}})
 
 api = Api(app)
 
 
 class ContactUsGet(Resource):
-    @cross_origin()
     def get(self, email):
         database = DB()
         data = database.get_data(email)
@@ -23,7 +22,6 @@ api.add_resource(ContactUsGet, '/contact/<string:email>')
 
 
 class ContactUsPost(Resource):
-    @cross_origin()
     def post(self):
         database = DB()
         data = request.get_json(force=True)
