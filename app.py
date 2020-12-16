@@ -2,16 +2,14 @@ from flask import Flask, jsonify, request
 from DB import DB
 from flask_restful import Api, Resource
 from flask import jsonify
-from flask_cors import CORS, cross_origin
+# from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-cors = CORS(app, resources={r"/*": {"Access-Control-Allow-Origin": "*"}})
 
 api = Api(app)
 
 
 class ContactUsGet(Resource):
-    @cross_origin()
     def get(self, email):
         database = DB()
         data = database.get_data(email)
@@ -23,7 +21,6 @@ api.add_resource(ContactUsGet, '/contact/<string:email>')
 
 
 class ContactUsPost(Resource):
-    @cross_origin()
     def post(self):
         database = DB()
         data = request.get_json(force=True)
