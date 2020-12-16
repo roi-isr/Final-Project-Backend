@@ -16,5 +16,5 @@ def roi():
 def daniel():
     return "Daniel"
 
-app.run(debug=True)
+app.run(host='0.0.0.0')
 
