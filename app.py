@@ -5,7 +5,7 @@ from flask import jsonify
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-cors = CORS(app)
+cors = CORS(app, resorces={r'/d/*': {"origins": '*'}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app)
 
@@ -28,9 +28,7 @@ class ContactUsPost(Resource):
         database = DB()
         data = request.get_json(force=True)
         database.insert_data(list(data.values()))
-        a = jsonify({"msg":"Successful POST"})
-        a.headers.add('Access-Control-Allow-Origin', '*')
-        return a
+        return "Successful POST"
 
 
 api.add_resource(ContactUsPost, '/contact')
