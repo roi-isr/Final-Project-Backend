@@ -2,13 +2,15 @@ from flask import Flask, jsonify, request
 from DB import DB
 from flask_restful import Api, Resource
 from flask import jsonify
-
-import psycopg2
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app)
 
 
+@cross_origin()
 class ContactUsGet(Resource):
     def get(self, email):
         database = DB()

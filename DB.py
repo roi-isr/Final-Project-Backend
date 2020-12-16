@@ -21,7 +21,7 @@ class DB:
     def create_table(self):
         with self.connction as conn:
             cur = conn.cursor()
-            cur.execute("CREATE TABLE IF NOT EXISTS Contact (email_address varchar(255) NOT NULL, name varchar(255), phone varchar(255),content varchar(555))")
+            cur.execute("CREATE TABLE IF NOT EXISTS Contact (email_address varchar(255) NOT NULL, name varchar(255), phone varchar(255), content varchar(555))")
 
     #insert data for table in the DB
     def insert_data(self, data):
