@@ -1,15 +1,33 @@
-from flask import Flask
+from flask import Flask,jsonify,request
+from DB import DB
+from flask_restful import Resource,Api
 from flask import jsonify
+
 import psycopg2
 
 app = Flask(__name__)
+api = Api(app)
+class contact_us(Resource):
+    # def get(self,keyword):
+    #
+    #     return jsonify({'keyword'})
+    def post(self):
+        database=DB()
+        data = request.get_json(force=True)
+        database.insert_data(list(data.values()))
+        return "Successful POST"
 
-@app.route('/')
+api.add_resource(contact_us,'/contact')
+
+@app.route('/create',)
 def home():
-    conn = connect_to_db()
-    create_table(conn)
-    print("Successful connection and creation")
-    return "hello"
+    database = DB()
+    print(database.get_data('roladin'))
+
+    # conn = connect_to_db()
+    database.create_table()
+    # print("Successful connection and creation")
+    return "successful run"
 
 @app.route('/roi')
 def roi():
@@ -19,20 +37,6 @@ def roi():
 def daniel():
     return "Daniel"
 
-def connect_to_db():
-    conn = psycopg2.connect("""
-    dbname='d6sja18bu5d6qh'
-    user='srmngikqacnqlj'
-    password='c74259d2a98acc497a45815abd47dfd4cf0d29484019b547d1c1b8fe789f9fd2'
-    host='ec2-54-170-100-209.eu-west-1.compute.amazonaws.com'
-    port='5432'""")
-    return conn
-
-def create_table(conn):
-    with conn:
-        cur = conn.cursor()
-        cur.execute("CREATE TABLE IF NOT EXISTS diamonds (name TEXT, price INTEGER);")
-
 if __name__=="__main__":
-    app.run(port=5000,debug=True)
+    app.run(port=5000, debug=True)
 
