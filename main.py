@@ -13,5 +13,5 @@ def roi():
 def daniel():
     return "Daniel"
 
-app.run(port=5000, debug=True)
+app.run(debug=True)
 
