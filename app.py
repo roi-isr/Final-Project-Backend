@@ -10,8 +10,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 api = Api(app)
 
 
-@cross_origin()
 class ContactUsGet(Resource):
+    @cross_origin()
     def get(self, email):
         database = DB()
         data = database.get_data(email)
@@ -21,8 +21,9 @@ class ContactUsGet(Resource):
 
 api.add_resource(ContactUsGet, '/contact/<string:email>')
 
-@cross_origin()
+
 class ContactUsPost(Resource):
+    @cross_origin()
     def post(self):
         database = DB()
         data = request.get_json(force=True)
