@@ -28,7 +28,9 @@ class ContactUsPost(Resource):
         database = DB()
         data = request.get_json(force=True)
         database.insert_data(list(data.values()))
-        return "Successful POST"
+        a = jsonify({"msg":"Successful POST"})
+        a.headers.add('Access-Control-Allow-Origin', '*')
+        return a
 
 
 api.add_resource(ContactUsPost, '/contact')
