@@ -26,11 +26,11 @@ class DB:
     #insert data for table in the DB
     def insert_data(self, data):
         with self.connction as conn:
-            cur=conn.cursor()
-            cur.execute("INSERT INTO Contact VALUES (%s, %s, %s,%s)", (data[0],data[1],data[2],data[3]))
+            cur = conn.cursor()
+            cur.execute("INSERT INTO Contact VALUES (%s, %s, %s,%s)", (data[0], data[1], data[2], data[3]))
 
-    def get_data(self,email):
+    def get_data(self, email):
         with self.connction as conn:
-            cur=conn.cursor()
-            cur.execute("SELECT name,phone,content FROM stock WHERE email=%s; ",(email,))
+            cur = conn.cursor()
+            cur.execute("SELECT email_address,name,phone,content FROM Contact WHERE email_address=%s; ", (email,))
             return cur.fetchall()
