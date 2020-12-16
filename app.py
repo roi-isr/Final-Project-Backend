@@ -11,6 +11,7 @@ api = Api(app)
 
 
 class ContactUsGet(Resource):
+    @cross_origin()
     def get(self, email):
         database = DB()
         data = database.get_data(email)
@@ -22,6 +23,7 @@ api.add_resource(ContactUsGet, '/contact/<string:email>')
 
 
 class ContactUsPost(Resource):
+    @cross_origin()
     def post(self):
         database = DB()
         data = request.get_json(force=True)
