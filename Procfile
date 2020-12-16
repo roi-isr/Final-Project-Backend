@@ -1,1 +1,1 @@
-web: uwsgi uwsgi.ini
+web: python3.8.5 main.py
