@@ -5,7 +5,6 @@ from config import CONNECTION_INFO
 class DB:
     def __init__(self):
         self.connction = self.connect_db()
-        self.create_table()
 
     # Create connection between the server and db
     def connect_db(self):
@@ -22,12 +21,28 @@ class DB:
                          phone varchar(255),
                          content varchar(555))""")
 
+    # Create a table, getting its name and fields attributes
+    def create_admin_table(self):
+        with self.connction as conn:
+            cur = conn.cursor()
+            cur.execute("""CREATE TABLE IF NOT EXISTS Admins
+                        (id SERIAL,
+                         username varchar(255),
+                         password varchar(255))""")
+
     # insert data for table in the DB
     def insert_data(self, data):
         with self.connction as conn:
             cur = conn.cursor()
             cur.execute("INSERT INTO Contact VALUES (%s, %s, %s,%s)",
                         (data[0], data[1], data[2], data[3]))
+
+    # insert data for table in the DB
+    def add_admin(self, data):
+        with self.connction as conn:
+            cur = conn.cursor()
+            cur.execute("INSERT INTO Admins VALUES (DEFAULT, %s, %s)",
+                        (data[0], data[1]))
 
     # retrieve data from DB
     def get_data(self, email):
