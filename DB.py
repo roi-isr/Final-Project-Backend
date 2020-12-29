@@ -37,7 +37,7 @@ class DB:
             cur.execute("INSERT INTO Contact VALUES (%s, %s, %s,%s)",
                         (data[0], data[1], data[2], data[3]))
 
-    # insert data for table in the DB
+    # Insert data for table in the DB
     def add_admin(self, data):
         with self.connction as conn:
             cur = conn.cursor()
