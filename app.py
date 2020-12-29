@@ -1,4 +1,5 @@
-""" Main app, implementing Restful-API endpoints with Flask frameworks """
+""" Main app, implementing Restful-API endpoints with Flask frameworks - getting requests from frontend users and
+sending back a response """
 
 from flask import Flask, jsonify, request
 from DB import DB
