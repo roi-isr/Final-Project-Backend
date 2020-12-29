@@ -1,17 +1,21 @@
+""" Main app, implementing Restful-API endpoints with Flask frameworks """
+
 from flask import Flask, jsonify, request
 from DB import DB
 from flask_restful import Api, Resource
-from flask_jwt import JWT,jwt_required
-from security import authenticate,identity
+from flask_jwt import JWT, jwt_required
+from security import authenticate, identity
 
 app = Flask(__name__)
-app.secret_key = 'ALEXEYYY'
+app.secret_key = 'ALEX'
 api = Api(app)
-# create an endpoint '/auth'
+# create an endpoint path '/auth'
 jwt = JWT(app, authenticate, identity)
 
 
+# Implements the retrieving of contact information endpoint
 class ContactUsGet(Resource):
+    # Requires an JWT authentication for reach those resources
     @jwt_required()
     def get(self, email):
         database = DB()
@@ -24,6 +28,7 @@ class ContactUsGet(Resource):
 api.add_resource(ContactUsGet, '/contact/<string:email>')
 
 
+# Implement updating contact information endpoint
 class ContactUsPost(Resource):
     def post(self):
         database = DB()
@@ -37,6 +42,7 @@ class ContactUsPost(Resource):
 api.add_resource(ContactUsPost, '/contact')
 
 
+# Implement add admin endpoint
 class AddAdmin(Resource):
     def post(self):
         database = DB()

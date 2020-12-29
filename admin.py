@@ -1,3 +1,5 @@
+""" Defining an admin class, used for further authentication process """
+
 import psycopg2
 from config import CONNECTION_INFO
 
