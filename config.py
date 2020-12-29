@@ -1,4 +1,5 @@
 """ Configuration file """
+
 CONNECTION_INFO = """
         dbname='d6sja18bu5d6qh'
         user='srmngikqacnqlj'

@@ -1,4 +1,4 @@
-""" Defining a DB class, which implements a direct connection function with the PostgreSQL DB"""
+""" Defining a DB class, which implements a direct connection and action functions with the PostgreSQL DB"""
 
 import psycopg2
 from config import CONNECTION_INFO
@@ -10,7 +10,7 @@ class DB:
 
     @staticmethod
     # Create connection between the server and db
-    def connect_db(self):
+    def connect_db():
         connection = psycopg2.connect(CONNECTION_INFO)
         return connection
 

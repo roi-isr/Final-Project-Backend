@@ -12,7 +12,7 @@ class Admin:
 
     @classmethod
     def find_by_username(cls, username):
-        connection=psycopg2.connect(CONNECTION_INFO)
+        connection = psycopg2.connect(CONNECTION_INFO)
         with connection as conn:
             cur = conn.cursor()
             query = "SELECT * FROM Admins WHERE username=%s"
@@ -23,12 +23,11 @@ class Admin:
         else:
             admin = None
         connection.close()
-
         return admin
 
     @classmethod
     def find_by_id(cls, _id):
-        connection=psycopg2.connect(CONNECTION_INFO)
+        connection = psycopg2.connect(CONNECTION_INFO)
         with connection as conn:
             cur = conn.cursor()
             query = "SELECT * FROM Admins WHERE id=%s"

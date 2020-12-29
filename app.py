@@ -13,9 +13,9 @@ api = Api(app)
 jwt = JWT(app, authenticate, identity)
 
 
-# Implements the retrieving of contact information endpoint
+# Defines the Retrieving of contact-us information API endpoint
 class ContactUsGet(Resource):
-    # Requires an JWT authentication for reach those resources
+    # Indicates the requirement of an JWT authentication in purpose of reaching the following resources
     @jwt_required()
     def get(self, email):
         database = DB()
@@ -28,9 +28,10 @@ class ContactUsGet(Resource):
 api.add_resource(ContactUsGet, '/contact/<string:email>')
 
 
-# Implement updating contact information endpoint
+# Defines the Update of contact-us information API endpoint
 class ContactUsPost(Resource):
-    def post(self):
+    @staticmethod
+    def post():
         database = DB()
         database.create_table()
         data = request.get_json(force=True)
@@ -42,9 +43,10 @@ class ContactUsPost(Resource):
 api.add_resource(ContactUsPost, '/contact')
 
 
-# Implement add admin endpoint
+# Defines Adding an Admin API endpoint
 class AddAdmin(Resource):
-    def post(self):
+    @staticmethod
+    def post():
         database = DB()
         database.create_admin_table()
         data = request.get_json(force=True)
