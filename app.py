@@ -58,5 +58,18 @@ class AddAdmin(Resource):
 
 api.add_resource(AddAdmin, '/add-admin')
 
+
+# Defines Adding an Admin API endpoint
+class DelAdminTable(Resource):
+    @staticmethod
+    def delete():
+        database = DB()
+        database.drop_admin_table()
+        database.close_connection()
+        return "Successful DELETE"
+
+
+api.add_resource(DelAdminTable, '/drop-admin')
+
 if __name__ == "__main__":
     app.run(port=5000, debug=True)

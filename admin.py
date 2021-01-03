@@ -17,7 +17,7 @@ class Admin:
             cur = conn.cursor()
             query = "SELECT * FROM Admins WHERE username=%s"
             cur.execute(query, (username,))
-        row = cur.fetchall()[0]
+        row = cur.fetchone()
         if row:
             admin = cls(*row)
         else:
@@ -32,7 +32,7 @@ class Admin:
             cur = conn.cursor()
             query = "SELECT * FROM Admins WHERE id=%s"
             cur.execute(query, (_id,))
-        row = cur.fetchall()[0]
+        row = cur.fetchone()
         if row:
             admin = cls(*row)
         else:

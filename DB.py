@@ -59,6 +59,13 @@ class DB:
             cur.execute(query, (email,))
             return cur.fetchall()
 
+
+    def drop_admin_table(self):
+        query = """DROP TABLE IF EXISTS Admins"""
+        with self.connection as conn:
+            cur = conn.cursor()
+            cur.execute(query)
+
     # Close open connection with DB
     def close_connection(self):
         self.connection.close()
