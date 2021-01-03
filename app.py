@@ -72,4 +72,4 @@ class DelAdminTable(Resource):
 api.add_resource(DelAdminTable, '/drop-admin')
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(debug=True)
