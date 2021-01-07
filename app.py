@@ -11,6 +11,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+# Proper exception handling
 app.config['PROPAGATE_EXCEPTIONS'] = True
 cors = CORS(app)
 api = Api(app)
