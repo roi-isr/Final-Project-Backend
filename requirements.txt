@@ -3,3 +3,4 @@ uwsgi
 flask_restful
 psycopg2
 flask_jwt
+flask_cors
