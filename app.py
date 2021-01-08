@@ -56,8 +56,7 @@ class AddAdmin(Resource):
         return "Successful POST"
 
 
-api.add_resource(AddAdmin, '/add-admin')
-
+api.add_resource(AddAdmin, '/add-admin'
 
 # Defines Adding an Admin API endpoint
 class DelAdminTable(Resource):
