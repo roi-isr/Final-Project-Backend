@@ -1,7 +1,7 @@
 """ Defining a DB class, which implements a direct connection and action functions with the PostgreSQL DB"""
 
 import psycopg2
-from connection_config import CONNECTION_INFO
+from .config_files.connection_config import CONNECTION_INFO
 
 
 class DB:

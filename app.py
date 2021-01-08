@@ -2,10 +2,10 @@
 sending back a response """
 
 from flask import Flask, jsonify, request
-from DB import DB
+from server.DB import DB
 from flask_restful import Api, Resource
 from flask_jwt import JWT, jwt_required
-from security import authenticate, identity
+from server.security import authenticate, identity
 from flask_cors import CORS
 import os
 

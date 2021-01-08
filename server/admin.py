@@ -1,7 +1,7 @@
 """ Defining an admin class, used for further authentication process """
 
 import psycopg2
-from connection_config import CONNECTION_INFO
+from .config_files.connection_config import CONNECTION_INFO
 
 
 class Admin:
