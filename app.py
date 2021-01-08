@@ -6,12 +6,28 @@ from DB import DB
 from flask_restful import Api, Resource
 from flask_jwt import JWT, jwt_required
 from security import authenticate, identity
+from flask_cors import CORS
+import os
 
 app = Flask(__name__)
-app.secret_key = 'ALEX'
+app.secret_key = os.urandom(24)
+# Proper exception handling
+app.config['PROPAGATE_EXCEPTIONS'] = True
+cors = CORS(app)
 api = Api(app)
 # create an endpoint path '/auth'
 jwt = JWT(app, authenticate, identity)
+
+
+# Defines the Retrieving of contact-us information API endpoint
+class ValidateAuthUser(Resource):
+    # Indicates the requirement of an JWT authentication in purpose of reaching the following resources
+    @jwt_required()
+    def get(self):
+        return jsonify({"auth": "Authenticated User"})
+
+
+api.add_resource(ValidateAuthUser, '/verify-token')
 
 
 # Defines the Retrieving of contact-us information API endpoint
@@ -72,3 +88,4 @@ api.add_resource(DelAdminTable, '/drop-admin')
 
 if __name__ == "__main__":
     app.run(debug=True)
+
