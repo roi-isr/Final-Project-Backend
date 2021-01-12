@@ -14,6 +14,10 @@ def add(admin_list):
     return jsonify({"message": "Successful POST request"})
 
 
+# def delete(admin_id):
+#     database = AdminDatabase()
+#
+
 def delete_table():
     database = AdminDatabase()
     database.drop_table()
