@@ -1,7 +1,7 @@
 from .database import Database
 
 CREATE_TABLE_QUERY = """CREATE TABLE IF NOT EXISTS admins
-                           (id SERIAL,
+                           (id SERIAL PRIMARY KEY,
                             username varchar(255),
                             password varchar(255))"""
 
