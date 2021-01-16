@@ -1,2 +1,2 @@
 # Default ignored files
-/connection_secret.py
+/server/config/connection_secret.py
