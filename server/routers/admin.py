@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from server.api_handlers import admin
+from server.api_handlers.admin import AdminHandler
 from flask import request
 from flask_jwt import jwt_required
 
@@ -10,29 +10,32 @@ class AdminRouter:
         @staticmethod
         @jwt_required()
         def get():
-            return admin.verified()
+            admin_handler = AdminHandler()
+            return admin_handler.verified()
 
     # Defines Adding an Admin API endpoint
     class AddAdmin(Resource):
         @staticmethod
         @jwt_required()
         def post():
+            admin_handler = AdminHandler()
             data = request.get_json(force=True)
-            return admin.add(data)
+            return admin_handler.insert(data)
 
-    class DelAdmin(Resource):
-        @staticmethod
-        @jwt_required()
-        def delete():
-            data = request.get_json(force=True)
-            return admin.delete()
+    # class DelAdmin(Resource):
+    #     @staticmethod
+    #     @jwt_required()
+    #     def delete():
+    #         data = request.get_json(force=True)
+    #         return admin.delete()
 
     # Defines Adding an Admin API endpoint
     class DelAdminTable(Resource):
         @staticmethod
         @jwt_required()
         def delete():
-            return admin.delete_table()
+            admin_handler = AdminHandler()
+            return admin_handler.delete_table()
 
     # Connect between path-->class
     routes = {'/verify-token': VerifyAuthUser,

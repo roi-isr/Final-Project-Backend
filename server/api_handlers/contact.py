@@ -1,22 +1,17 @@
-from ..database.contact import ContactDatabase
+from server.database.queries.contact import *
 from flask import jsonify
 from .build_response.build_response import build_response
+from .handler import ApiHandler
 
 
-def get_info(email):
-    database = ContactDatabase()
-    data = database.get_data(email)
-    data_dict = {i: data[i] for i in range(len(data))}
-    database.close_connection()
-    json_info = jsonify(data_dict)
-    return build_response(data=json_info, status_code=200)
+class ContactHandler(ApiHandler):
+    def __init__(self):
+        super().__init__()
 
+    def get_info(self, email):
+        super()._fetch_data(GET_DATA_QUERY, (email,))
+        return self._response
 
-def insert(contact_info):
-    database = ContactDatabase()
-    database.create_table()
-    extracted_list = list(contact_info.values())
-    database.insert_data(extracted_list)
-    database.close_connection()
-    json_info = jsonify({"message": "Successful POST"})
-    return build_response(data=json_info, status_code=201)
+    def insert(self, contact_info):
+        super()._create_table(CREATE_TABLE_QUERY)
+        super()._insert(INSERT_DATA_QUERY, contact_info)

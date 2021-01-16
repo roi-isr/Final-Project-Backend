@@ -1,32 +1,23 @@
-from ..database.admin import AdminDatabase
+from ..database.queries.admin import *
 from flask import jsonify
 from .build_response.build_response import build_response
+from .handler import ApiHandler
 
 
-def verified():
-    return jsonify({"auth": "Authenticated User"})
-    json_info = jsonify({"auth": "Authenticated User"})
-    return build_response(data=json_info, status_code=200)
+class AdminHandler(ApiHandler):
+    def __init__(self):
+        super().__init__()
 
+    def verified(self):
+        json_info = jsonify({"auth": "Authenticated User"})
+        self._response = build_response(data=json_info, status_code=200)
+        return self._response
 
-def add(admin_list):
-    database = AdminDatabase()
-    # If table doesn't exists
-    database.create_table()
-    extracted_list = list(admin_list.values())
-    database.add_admin(extracted_list)
-    database.close_connection()
-    json_info = jsonify({"message": "Successful POST request"})
-    return build_response(data=json_info, status_code=201)
+    def insert(self, admin_list):
+        super()._create_table(CREATE_TABLE_QUERY)
+        super()._insert(INSERT_ADMIN_QUERY, admin_list)
+        return self._response
 
-
-# def delete(admin_id):
-#     database = AdminDatabase()
-#
-
-def delete_table():
-    database = AdminDatabase()
-    database.drop_table()
-    database.close_connection()
-    json_info = jsonify({"message": "Successful DELETE request"})
-    return build_response(data=json_info, status_code=200)
+    def delete_table(self):
+        super()._delete_table(INSERT_ADMIN_QUERY)
+        return self._response
