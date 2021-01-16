@@ -19,7 +19,7 @@ class AdminRouter:
         @jwt_required()
         def post():
             admin_handler = AdminHandler()
-            data = request.get_json(force=True)
+            data = request.get_json(force=True).values()
             return admin_handler.insert(data)
 
     # class DelAdmin(Resource):

@@ -17,7 +17,7 @@ class ContactRouter:
         @staticmethod
         def post():
             contact_handler = ContactHandler()
-            data = request.get_json(force=True)
+            data = request.get_json(force=True).values()
             return contact_handler.insert(data)
 
     # Connect between path-->class

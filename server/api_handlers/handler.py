@@ -14,8 +14,8 @@ class ApiHandler:
 
     def _insert(self, query, data):
         database = Database()
-        extracted_tuple = tuple(data.values())
-        database.insert_data(query, extracted_tuple)
+        tuple_data = tuple(data)
+        database.insert_data(query, tuple_data)
         database.close_connection()
         json_info = jsonify({"message": "Successful POST request"})
         self._response = build_response(data=json_info, status_code=201)
