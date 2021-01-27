@@ -31,5 +31,6 @@ def add_resources(resources):
 add_resources(AdminRouter.routes)
 add_resources(ContactRouter.routes)
 
+
 if __name__ == "__main__":
     app.run(debug=True)
