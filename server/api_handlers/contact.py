@@ -1,6 +1,4 @@
 from server.database.queries.contact import *
-from flask import jsonify
-from .build_response.build_response import build_response
 from .handler import ApiHandler
 
 
@@ -8,7 +6,7 @@ class ContactHandler(ApiHandler):
     def __init__(self):
         super().__init__()
 
-    def get_info(self, email):
+    def get_info(self, email: str):
         super()._fetch_data(GET_DATA_QUERY, (email,))
         return self._response
 

@@ -1,7 +1,7 @@
 """ Defining an admin class, used for further authentication process """
 
 import psycopg2
-from .config.connection_config import CONNECTION_INFO
+from server.config.connection_config import CONNECTION_INFO
 
 
 class Admin:
@@ -11,7 +11,8 @@ class Admin:
         self.password = password
 
     @classmethod
-    def find_by_username(cls, username):
+    # Finds a username (admin), and returns an instance of the admin if exist, else returns None
+    def find_by_username(cls, username: str):
         connection = psycopg2.connect(CONNECTION_INFO)
         with connection as conn:
             cur = conn.cursor()
@@ -26,7 +27,8 @@ class Admin:
         return admin
 
     @classmethod
-    def find_by_id(cls, _id):
+    # # Finds a username (admin) by id, and returns an instance of the admin if exist, else returns None
+    def find_by_id(cls, _id: str):
         connection = psycopg2.connect(CONNECTION_INFO)
         with connection as conn:
             cur = conn.cursor()
