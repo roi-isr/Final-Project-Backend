@@ -1,4 +1,3 @@
-# from server.database.database import Database
 
 CREATE_TABLE_QUERY = """CREATE TABLE IF NOT EXISTS Contact
                         (email_address varchar(255) NOT NULL,

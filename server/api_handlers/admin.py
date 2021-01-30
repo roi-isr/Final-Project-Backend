@@ -17,6 +17,9 @@ class AdminHandler(ApiHandler):
         super()._insert(INSERT_ADMIN_QUERY, admin_list)
         return self._response
 
+    def delete(self, _id):
+        super()._delete_item(DELETE_ADMIN_ITEM, _id)
+
     def delete_table(self):
         super()._delete_table(INSERT_ADMIN_QUERY)
         return self._response

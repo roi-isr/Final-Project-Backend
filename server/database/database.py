@@ -41,11 +41,10 @@ class Database:
             cur.execute(query, data)
             return cur.fetchall()
 
-    def delete_item(self, query: str, item_id: Tuple[str]) -> List[str]:
+    def delete_item(self, query: str, item_id: Tuple[str]):
         with self.connection as conn:
             cur = conn.cursor()
             cur.execute(query, item_id)
-            return cur.fetchall()
 
     def drop_table(self, query: str):
         with self.connection as conn:
