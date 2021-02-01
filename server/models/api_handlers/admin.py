@@ -1,6 +1,6 @@
-from ..database.queries.admin import *
+from server.database.queries.admin import *
 from flask import jsonify
-from .handler import ApiHandler
+from .basic_handler import ApiHandler
 
 
 class AdminHandler(ApiHandler):

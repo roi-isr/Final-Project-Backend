@@ -18,6 +18,7 @@ GET_PACKAGE_ALL_QUERY = """SELECT *
                            FROM diamond_package"""
 
 GET_PACKAGE_QUERY_BY_ID = """SELECT *
+                             FROM diamond_package
                              WHERE package_code=%s"""
 
 DELETE_PACKAGE_ITEM = """DELETE FROM diamond_package

@@ -1,5 +1,5 @@
 from server.database.queries.delivery import *
-from .handler import ApiHandler
+from .basic_handler import ApiHandler
 from typing import List
 
 

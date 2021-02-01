@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from server.api_handlers.contact import ContactHandler
+from server.models.api_handlers.contact import ContactHandler
 from flask import request
 from flask_jwt import jwt_required
 

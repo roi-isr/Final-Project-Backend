@@ -1,6 +1,6 @@
 from server.database.queries.contact import *
 from typing import List
-from .handler import ApiHandler
+from .basic_handler import ApiHandler
 
 
 class ContactHandler(ApiHandler):
