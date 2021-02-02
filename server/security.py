@@ -1,7 +1,7 @@
 """ Security & Authentication class, for adding a layer of security to the application, and authenticating admin
 users """
 
-from .admin import Admin
+from server.models.entities.admin import Admin
 
 
 # Routes from app.py JWT instance object - implements the authentication of admins (sending them auth token for

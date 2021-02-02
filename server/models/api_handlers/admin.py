@@ -1,7 +1,6 @@
-from ..database.queries.admin import *
+from server.database.queries.admin import *
 from flask import jsonify
-from .build_response.build_response import build_response
-from .handler import ApiHandler
+from .basic_handler import ApiHandler
 
 
 class AdminHandler(ApiHandler):
@@ -10,13 +9,16 @@ class AdminHandler(ApiHandler):
 
     def verified(self):
         json_info = jsonify({"auth": "Authenticated User"})
-        self._response = build_response(data=json_info, status_code=200)
+        self._response = super()._build_response(data=json_info, status_code=200)
         return self._response
 
-    def insert(self, admin_list):
+    def insert(self, admin_list: list):
         super()._create_table(CREATE_TABLE_QUERY)
         super()._insert(INSERT_ADMIN_QUERY, admin_list)
         return self._response
+
+    def delete(self, _id):
+        super()._delete_item(DELETE_ADMIN_ITEM, _id)
 
     def delete_table(self):
         super()._delete_table(INSERT_ADMIN_QUERY)

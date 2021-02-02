@@ -4,8 +4,10 @@ sending back a response """
 from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
-from server.routers.admin import AdminRouter
-from server.routers.contact import ContactRouter
+from server.resources.admin import AdminRouter
+from server.resources.contact import ContactRouter
+from server.resources.diamond_package import PackageRouter
+from server.resources.delivery import DeliveryRouter
 from server.security import authenticate, identity
 from flask_cors import CORS
 import os
@@ -30,6 +32,8 @@ def add_resources(resources):
 
 add_resources(AdminRouter.routes)
 add_resources(ContactRouter.routes)
+add_resources(PackageRouter.routes)
+add_resources(DeliveryRouter.routes)
 
 
 if __name__ == "__main__":
