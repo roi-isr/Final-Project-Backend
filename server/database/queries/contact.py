@@ -8,6 +8,10 @@ CREATE_TABLE_QUERY = """CREATE TABLE IF NOT EXISTS contact
 
 INSERT_DATA_QUERY = "INSERT INTO Contact VALUES (%s, %s, %s, %s, DEFAULT)"
 
-GET_DATA_QUERY = """SELECT email_address,name,phone,content
-                   FROM Contact
-                   WHERE email_address=%s;"""
+GET_DATA_QUERY = """SELECT email_address,name,phone,content,create_at
+                    FROM Contact
+                    WHERE email_address=%s;"""
+
+GET_DATA_ALL_QUERY = """SELECT email_address,name,phone,content,create_at
+                        FROM Contact
+                        ORDER BY create_at DESC;"""
