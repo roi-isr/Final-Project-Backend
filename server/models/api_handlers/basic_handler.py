@@ -28,13 +28,13 @@ class ApiHandler:
             database = Database()
             database.insert_data(query, tuple_data)
             self._response = self._build_response(data=jsonify({"message": "Successful POST request"}),
-                                                   status_code=201)
+                                                  status_code=201)
         except errors.UniqueViolation:
             self._response = self._build_response(data=jsonify({"message": "Item already exists"}),
-                                                   status_code=400)
+                                                  status_code=400)
         except:
             self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-                                                   status_code=500)
+                                                  status_code=500)
         finally:
             database.close_connection()
 
@@ -44,10 +44,10 @@ class ApiHandler:
                              for j in range(len(named_values))}
                          for i in range(len(data))}
             self._response = self._build_response(data=jsonify(data_dict),
-                                                   status_code=200)
+                                                  status_code=200)
         else:
             self._response = self._build_response(data=jsonify({'message': 'Item doesn\'t found'}),
-                                                   status_code=404)
+                                                  status_code=404)
 
     def _fetch_data(self, query: str, data: str, named_values: List[str]):
         try:
@@ -56,7 +56,7 @@ class ApiHandler:
             self.__handle_data(data, named_values)
         except:
             self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-                                                   status_code=500)
+                                                  status_code=500)
         finally:
             database.close_connection()
 
@@ -67,11 +67,11 @@ class ApiHandler:
             self.__handle_data(data, named_values)
         except:
             self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-                                                   status_code=500)
+                                                  status_code=500)
         finally:
             database.close_connection()
 
-    def update_item(self, query: str, _id:str, data: List[str]):
+    def update_item(self, query: str, _id: str, data: List[str]):
         pass
 
     def _delete_item(self, query: str, _id: str):
@@ -79,10 +79,10 @@ class ApiHandler:
             database = Database()
             database.delete_item(query, (_id,))
             self._response = self._build_response(data=jsonify({"message": "Successful DELETE request"}),
-                                                   status_code=200)
+                                                  status_code=200)
         except:
             self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-                                                   status_code=500)
+                                                  status_code=500)
         finally:
             database.close_connection()
 
@@ -91,10 +91,9 @@ class ApiHandler:
             database = Database()
             database.drop_table(query)
             self._response = self._build_response(data=jsonify({"message": "Successful DELETE request"}),
-                                                   status_code=200)
+                                                  status_code=200)
         except:
             self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-                                                   status_code=500)
+                                                  status_code=500)
         finally:
             database.close_connection()
-

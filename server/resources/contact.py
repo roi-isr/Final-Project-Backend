@@ -26,7 +26,15 @@ class ContactRouter:
             data = request.get_json(force=True).values()
             return contact_handler.insert(data)
 
+    class ContactUsDelete(Resource):
+        @staticmethod
+        @jwt_required()
+        def delete(_id):
+            contact_handler = ContactHandler()
+            return contact_handler.delete(_id)
+
     # Connect between path-->class
     routes = {'/contact/<string:email>': ContactUsGet,
+              '/contact/<string:_id>': ContactUsDelete,
               '/contact': ContactUsPost,
               '/contacts': ContactUsGetAll}
