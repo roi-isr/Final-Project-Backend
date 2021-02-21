@@ -6,7 +6,7 @@ CREATE_TABLE_QUERY = """CREATE TABLE IF NOT EXISTS contact
                          phone varchar(255),
                          content varchar(555),
                          create_at TIMESTAMP DEFAULT (now() at time zone 'utc-2'))"""
-
+#insert a contact queny via SQL
 INSERT_CONTACT_QUERY = "INSERT INTO Contact VALUES (DEFAULT, %s, %s, %s, %s, DEFAULT)"
 
 GET_CONTACT_QUERY = """SELECT id, email_address,name,phone,content,create_at
