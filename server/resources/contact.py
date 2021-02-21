@@ -12,6 +12,12 @@ class ContactRouter:
             contact_handler = ContactHandler()
             return contact_handler.get_info(email)
 
+    class ContactUsGetAll(Resource):
+        @jwt_required()
+        def get(self):
+            contact_handler = ContactHandler()
+            return contact_handler.get_info_all()
+
     # Defines the Update of contact-us information API endpoint
     class ContactUsPost(Resource):
         @staticmethod
@@ -22,4 +28,5 @@ class ContactRouter:
 
     # Connect between path-->class
     routes = {'/contact/<string:email>': ContactUsGet,
-              '/contact': ContactUsPost}
+              '/contact': ContactUsPost,
+              '/contacts': ContactUsGetAll}
