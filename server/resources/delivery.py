@@ -1,6 +1,7 @@
 from flask_restful import Resource
 from server.models.api_handlers.delivery import DeliveryHandler
 from flask import request
+from flask_cors import cross_origin
 from flask_jwt import jwt_required
 
 
@@ -32,3 +33,12 @@ class DeliveryRouter:
     routes = {'/deliveries': DeliveryGetAll,
               '/delivery': DeliveryPost,
               '/delivery/<string:_id>': DeliveryDelete}
+
+
+"""
+ ---------------DOCS------------------
+GET - /deliveries
+POST - /delivery
+DELETE - /delivery/<string:_id>
+
+"""

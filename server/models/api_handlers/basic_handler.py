@@ -32,9 +32,9 @@ class ApiHandler:
         except errors.UniqueViolation:
             self._response = self._build_response(data=jsonify({"message": "Item already exists"}),
                                                   status_code=400)
-        except:
-            self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-                                                  status_code=500)
+        # except:
+        #     self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
+        #                                           status_code=500)
         finally:
             database.close_connection()
 

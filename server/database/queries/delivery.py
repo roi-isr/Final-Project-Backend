@@ -1,12 +1,17 @@
 
 CREATE_DELIVERY_QUERY = """CREATE TABLE IF NOT EXISTS delivery
                            (delivery_id SERIAL PRIMARY KEY,
-                            package_code varchar(255) NOT NULL REFERENCES diamond_package(package_code),
+                            package_code varchar(255) NOT NULL,
+                            package_weight REAL,
+                            delivery_from_country varchar(255),
                             delivery_company varchar(255),
-                            delivery_origin varchar(255))"""
+                            sender varchar(255),
+                            send_date DATE)"""
+
+#REFERENCES diamond_package(package_code)
 
 INSERT_DELIVERY_QUERY = """INSERT INTO delivery 
-                           VALUES (DEFAULT, %s, %s, %s)"""
+                           VALUES (DEFAULT, %s, %s, %s, %s, %s, %s)"""
 
 GET_DELIVERY_ALL_QUERY = """SELECT delivery.*, diamond_package.seller
                             FROM delivery

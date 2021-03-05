@@ -10,6 +10,7 @@ class DeliveryHandler(ApiHandler):
 
     def insert(self, delivery_list: List[str]):
         super()._create_table(CREATE_DELIVERY_QUERY)
+
         super()._insert(INSERT_DELIVERY_QUERY, delivery_list)
         return self._response
 
