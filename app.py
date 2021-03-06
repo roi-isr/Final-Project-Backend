@@ -3,7 +3,7 @@ sending back a response """
 
 from flask import Flask
 from flask_restful import Api
-from flask_jwt import JWT
+from flask_jwt_extended import JWTManager
 from server.resources.admin import AdminRouter
 from server.resources.contact import ContactRouter
 from server.resources.diamond_package import PackageRouter
@@ -20,10 +20,7 @@ app.config['PROPAGATE_EXCEPTIONS'] = True
 cors = CORS(app)
 
 api = Api(app)
-
-# create an endpoint path '/auth'
-jwt = JWT(app, authenticate, identity)
-
+jwt = JWTManager(app)
 
 def add_resources(resources):
     for path, class_name in resources.items():

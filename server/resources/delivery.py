@@ -1,8 +1,7 @@
 from flask_restful import Resource
 from server.models.api_handlers.delivery import DeliveryHandler
 from flask import request
-from flask_cors import cross_origin
-from flask_jwt import jwt_required
+from flask_jwt_extended import jwt_required
 
 
 class DeliveryRouter:
@@ -16,6 +15,7 @@ class DeliveryRouter:
     # Defines the Update of contact-us information API endpoint
     class DeliveryPost(Resource):
         @staticmethod
+        # @cross_origin(headers=['Content-Type', 'Authorization'])
         @jwt_required()
         def post():
             delivery_handler = DeliveryHandler()

@@ -6,7 +6,8 @@ from typing import List
 class DeliveryHandler(ApiHandler):
     def __init__(self):
         super().__init__()
-        self.named_values = ["delivery_id", "package_code", "delivery_company", "delivery_origin", "seller"]
+        self.named_values = ["delivery_id", "package_code", "package_weight","delivery_from_country",
+                             "delivery_company", "seller", "send_date"]
 
     def insert(self, delivery_list: List[str]):
         super()._create_table(CREATE_DELIVERY_QUERY)

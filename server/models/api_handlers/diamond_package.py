@@ -6,8 +6,9 @@ from typing import List
 class PackageHandler(ApiHandler):
     def __init__(self):
         super().__init__()
-        self.named_values = ["package_code", "weight_in_karat", "cost_per_karat", "clearance", "color", "seller",
-                             "total_cost", "sell_date", "payment_method", "status"]
+        self.named_values = ["package_code", "weight_in_karat", "cost_per_karat",
+                             "clearance", "color", "seller","total_cost", "sell_date",
+                             "payment_method", "status"]
 
     def insert(self, package_list: List[str]):
         super()._create_table(CREATE_PACKAGE_QUERY)
