@@ -19,10 +19,6 @@ class DeliveryHandler(ApiHandler):
         super()._fetch_all_data(GET_DELIVERY_ALL_QUERY, self.named_values)
         return self._response
 
-    # def fetch_data_by_code(self, package_code: str):
-    #     super()._fetch_data(GET_PACKAGE_ALL_QUERY, package_code, self.named_values)
-    #     return self._response
-
     def delete_item(self, delivery_code):
         super()._delete_item(DELETE_DELIVERY_ITEM, delivery_code)
         return self._response

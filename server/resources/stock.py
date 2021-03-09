@@ -1,34 +1,34 @@
 from flask_restful import Resource
-from server.models.api_handlers.diamond_package import PackageHandler
+from server.models.api_handlers.stock import StockHandler
 from flask import request
 from flask_jwt_extended import jwt_required
 
 
-class PackageRouter:
+class StockRouter:
     # Defines the Retrieving of contact-us information API endpoint
-    class PackageGetAll(Resource):
+    class StockGetAll(Resource):
         @jwt_required()
         def get(self):
-            package_handler = PackageHandler()
-            return package_handler.fetch_all_data()
+            stock_handler = StockHandler()
+            return stock_handler.fetch_all_data()
 
     # Defines the Update of contact-us information API endpoint
-    class PackagePost(Resource):
+    class StockPost(Resource):
         @staticmethod
         @jwt_required()
         def post():
-            package_handler = PackageHandler()
+            stock_handler = StockHandler()
             data = request.get_json(force=True).values()
-            return package_handler.insert(data)
+            return stock_handler.insert(data)
 
     class PackageDelete(Resource):
         @staticmethod
         @jwt_required()
         def delete(code):
-            package_handler = PackageHandler()
+            package_handler = StockHandler()
             return package_handler.delete_item(code)
 
     # Connect between path-->class
-    routes = {'/packages': PackageGetAll,
-              '/package': PackagePost,
+    routes = {'/packages': StockGetAll,
+              '/package': StockPost,
               '/package/<string:code>': PackageDelete}
