@@ -7,7 +7,8 @@ CREATE_SELL_QUERY = """CREATE TABLE IF NOT EXISTS sell
                         mediator_name varchar(255))"""
 
 INSERT_SELL_QUERY = """INSERT INTO sell 
-                          VALUES (DEFAULT, %s, %s, %s, %s)"""
+                          VALUES (DEFAULT, %s, %s, %s, %s)
+                          RETURNING sell_id"""
 
 GET_SELL_ALL_QUERY = """SELECT sell.*, diamond_package.weight_in_karat
                         FROM sell

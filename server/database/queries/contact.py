@@ -9,7 +9,8 @@ CREATE_TABLE_QUERY = """CREATE TABLE IF NOT EXISTS contact
 
 # insert a contact query via SQL
 
-INSERT_CONTACT_QUERY = "INSERT INTO Contact VALUES (DEFAULT, %s, %s, %s, %s, DEFAULT)"
+INSERT_CONTACT_QUERY = """INSERT INTO Contact
+                          VALUES (DEFAULT, %s, %s, %s, %s, DEFAULT)"""
 
 GET_CONTACT_QUERY = """SELECT id, email_address,name,phone,content,create_at
                     FROM Contact

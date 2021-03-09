@@ -12,7 +12,8 @@ CREATE_DELIVERY_QUERY = """CREATE TABLE IF NOT EXISTS delivery
 # , diamond_package.seller
 
 INSERT_DELIVERY_QUERY = """INSERT INTO delivery 
-                           VALUES (DEFAULT, %s, %s, %s, %s, %s, %s)"""
+                           VALUES (DEFAULT, %s, %s, %s, %s, %s, %s)
+                           RETURNING delivery_id"""
 
 GET_DELIVERY_ALL_QUERY = """SELECT *
                             FROM delivery"""

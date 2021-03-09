@@ -12,7 +12,8 @@ CREATE_STOCK_QUERY = """CREATE TABLE IF NOT EXISTS stock
                            status varchar(50) NOT NULL)"""
 
 INSERT_STOCK_QUERY = """INSERT INTO diamond_package 
-                          VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                          VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                          RETURNING stock_id"""
 
 GET_STOCK_ALL_QUERY = """SELECT *
                            FROM diamond_package"""

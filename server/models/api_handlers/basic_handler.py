@@ -26,8 +26,8 @@ class ApiHandler:
         tuple_data = tuple(data)
         try:
             database = Database()
-            database.insert_data(query, tuple_data)
-            self._response = self._build_response(data=jsonify({"message": "Successful POST request"}),
+            _id = database.insert_data(query, tuple_data)
+            self._response = self._build_response(data=jsonify({"message": "Successful POST request", "_id": _id}),
                                                   status_code=201)
         except errors.UniqueViolation:
             self._response = self._build_response(data=jsonify({"message": "Item already exists"}),

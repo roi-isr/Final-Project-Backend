@@ -26,6 +26,7 @@ class Database:
         with self.connection as conn:
             cur = conn.cursor()
             cur.execute(query, data)
+            return cur.fetchone()[0]
 
     # Retrieve data from DB
     def fetch_all_data(self, query: str) -> List[str]:
