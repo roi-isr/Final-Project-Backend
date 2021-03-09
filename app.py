@@ -22,6 +22,7 @@ cors = CORS(app)
 api = Api(app)
 jwt = JWTManager(app)
 
+
 def add_resources(resources):
     for path, class_name in resources.items():
         api.add_resource(class_name, path)

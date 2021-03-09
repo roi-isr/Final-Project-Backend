@@ -31,8 +31,10 @@ class AdminRouter:
                 })
                 response.status_code = 200
                 return response
-
-            response = jsonify({'message': 'You have sent invalid credentials'})
+            if not admin:
+                response = jsonify({'message': 'שם משתמש לא קיים במערכת...'})
+            else:
+                response = jsonify({'message': 'הסיסמא שהוכנסה שגויה'})
             # Send unauthorized message
             response.status_code = 401
             return response
