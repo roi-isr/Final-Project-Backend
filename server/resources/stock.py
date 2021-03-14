@@ -21,14 +21,14 @@ class StockRouter:
             data = request.get_json(force=True).values()
             return stock_handler.insert(data)
 
-    class PackageDelete(Resource):
+    class StockDelete(Resource):
         @staticmethod
         @jwt_required()
         def delete(code):
-            package_handler = StockHandler()
-            return package_handler.delete_item(code)
+            stock_handler = StockHandler()
+            return stock_handler.delete_item(code)
 
     # Connect between path-->class
-    routes = {'/packages': StockGetAll,
-              '/package': StockPost,
-              '/package/<string:code>': PackageDelete}
+    routes = {'/stocks': StockGetAll,
+              '/stock': StockPost,
+              '/stock/<string:code>': StockDelete}
