@@ -22,22 +22,6 @@ class ApiHandler:
         database.create_table(query)
         database.close_connection()
 
-    def _insert(self, query: str, data: List[str]):
-        tuple_data = tuple(data)
-        try:
-            database = Database()
-            _id = database.insert_data(query, tuple_data)
-            self._response = self._build_response(data=jsonify({"message": "Successful POST request", "_id": _id}),
-                                                  status_code=201)
-        except errors.UniqueViolation:
-            self._response = self._build_response(data=jsonify({"message": "Item already exists"}),
-                                                  status_code=400)
-        # except:
-        #     self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-        #                                           status_code=500)
-        finally:
-            database.close_connection()
-
     def __handle_data(self, data: List[Tuple[str]], named_values: List[str]):
         if data:
             data_dict = {i: {named_values[j]: data[i][j]
@@ -71,8 +55,34 @@ class ApiHandler:
         finally:
             database.close_connection()
 
-    def update_item(self, query: str, _id: str, data: List[str]):
-        pass
+    def _insert(self, query: str, data: List[str]):
+        tuple_data = tuple(data)
+        try:
+            database = Database()
+            _id = database.insert_data(query, tuple_data)
+            self._response = self._build_response(data=jsonify({"message": "Successful POST request", "_id": _id}),
+                                                  status_code=201)
+        except errors.UniqueViolation:
+            self._response = self._build_response(data=jsonify({"message": "Item already exists"}),
+                                                  status_code=400)
+        # except:
+        #     self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
+        #                                           status_code=500)
+        finally:
+            database.close_connection()
+
+    def _update_item(self, query: str, _id: str, data: List[str]):
+        tuple_data = tuple(data)
+        # try:
+        database = Database()
+        _id = database.update_item(query, tuple_data, _id)
+        self._response = self._build_response(data=jsonify({"message": "Successful PUT request", "_id": _id}),
+                                              status_code=200)
+        # except:
+        #     self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
+        #                                           status_code=500)
+        # finally:
+        #     database.close_connection()
 
     def _delete_item(self, query: str, _id: str):
         try:

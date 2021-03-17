@@ -23,6 +23,13 @@ class StockHandler(ApiHandler):
         super()._fetch_data(GET_STOCK_ALL_QUERY, package_code, self.named_values)
         return self._response
 
-    def delete_item(self, package_code):
-        super()._delete_item(DELETE_STOCK_ITEM, package_code)
+    def update_item(self, package_id: str, new_package_list: List[str]):
+        # Exclude IDs
+        keys_str = ', '.join(self.named_values[1:-1])
+        fixed_query = UPDATE_STOCK_ITEM_QUERY.format(keys_str)
+        super()._update_item(fixed_query, package_id, new_package_list)
+        return self._response
+
+    def delete_item(self, package_id: str):
+        super()._delete_item(DELETE_STOCK_ITEM, package_id)
         return self._response

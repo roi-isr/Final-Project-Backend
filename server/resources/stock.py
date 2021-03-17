@@ -21,6 +21,14 @@ class StockRouter:
             data = request.get_json(force=True).values()
             return stock_handler.insert(data)
 
+    class StockPut(Resource):
+        @staticmethod
+        @jwt_required()
+        def put(code):
+            stock_handler = StockHandler()
+            data = request.get_json(force=True).values()
+            return stock_handler.update_item(code, data)
+
     class StockDelete(Resource):
         @staticmethod
         @jwt_required()
@@ -31,4 +39,5 @@ class StockRouter:
     # Connect between path-->class
     routes = {'/stocks': StockGetAll,
               '/stock': StockPost,
+              '/stock/update/<string:code>': StockPut,
               '/stock/<string:code>': StockDelete}

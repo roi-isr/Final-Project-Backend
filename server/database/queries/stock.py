@@ -16,11 +16,17 @@ INSERT_STOCK_QUERY = """INSERT INTO stock
                         RETURNING stock_id"""
 
 GET_STOCK_ALL_QUERY = """SELECT *
-                           FROM stock"""
+                           FROM stock
+                           ORDER BY sell_date DESC"""
 
 GET_STOCK_QUERY_BY_ID = """SELECT *
                              FROM stock
                              WHERE package_code=%s"""
+
+UPDATE_STOCK_ITEM_QUERY = """UPDATE stock
+                             SET ({})=%s
+                             WHERE stock_id=%s
+                             RETURNING stock_id"""
 
 DELETE_STOCK_ITEM = """DELETE FROM stock
                          WHERE stock_id=%s"""

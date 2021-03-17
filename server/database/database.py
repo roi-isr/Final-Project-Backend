@@ -26,21 +26,27 @@ class Database:
         with self.connection as conn:
             cur = conn.cursor()
             cur.execute(query, data)
-            return cur.fetchone()[0]
+        return cur.fetchone()[0]
 
     # Retrieve data from DB
     def fetch_all_data(self, query: str) -> List[str]:
         with self.connection as conn:
             cur = conn.cursor()
             cur.execute(query)
-            return cur.fetchall()
+        return cur.fetchall()
 
     # Retrieve data from DB
     def fetch_specific_data(self, query: str, data: Tuple[str]) -> List[str]:
         with self.connection as conn:
             cur = conn.cursor()
             cur.execute(query, data)
-            return cur.fetchall()
+        return cur.fetchall()
+
+    def update_item(self, query: str, data: Tuple[str], _id: str):
+        with self.connection as conn:
+            cur = conn.cursor()
+            cur.execute(query, (data, _id))
+        return cur.fetchone()[0]
 
     def delete_item(self, query: str, item_id: Tuple[str]):
         with self.connection as conn:
