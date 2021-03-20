@@ -22,6 +22,14 @@ class DeliveryRouter:
             data = request.get_json(force=True).values()
             return delivery_handler.insert(data)
 
+    class DeliveryPut(Resource):
+        @staticmethod
+        @jwt_required()
+        def put(code):
+            delivery_handler = DeliveryHandler()
+            data = request.get_json(force=True).values()
+            return delivery_handler.update_item(code, data)
+
     class DeliveryDelete(Resource):
         @staticmethod
         @jwt_required()
@@ -32,6 +40,7 @@ class DeliveryRouter:
     # Connect between path-->class
     routes = {'/deliveries': DeliveryGetAll,
               '/delivery': DeliveryPost,
+              '/delivery/update/<string:code>': DeliveryPut,
               '/delivery/<string:_id>': DeliveryDelete}
 
 
@@ -40,5 +49,4 @@ class DeliveryRouter:
 GET - /deliveries
 POST - /delivery
 DELETE - /delivery/<string:_id>
-
 """

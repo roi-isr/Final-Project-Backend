@@ -18,6 +18,10 @@ INSERT_DELIVERY_QUERY = """INSERT INTO delivery
 GET_DELIVERY_ALL_QUERY = """SELECT *
                             FROM delivery"""
 
+UPDATE_DELIVERY_ITEM_QUERY = """UPDATE delivery
+                             SET ({})=%s
+                             WHERE delivery_id=%s
+                             RETURNING delivery_id"""
 
 DELETE_DELIVERY_ITEM = """DELETE FROM delivery
                           WHERE delivery_id=%s"""
