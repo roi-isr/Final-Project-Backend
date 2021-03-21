@@ -8,6 +8,7 @@ from server.resources.admin import AdminRouter
 from server.resources.contact import ContactRouter
 from server.resources.stock import StockRouter
 from server.resources.delivery import DeliveryRouter
+from server.resources.store import StoreRouter
 from flask_cors import CORS
 import os
 
@@ -31,6 +32,7 @@ add_resources(AdminRouter.routes)
 add_resources(ContactRouter.routes)
 add_resources(StockRouter.routes)
 add_resources(DeliveryRouter.routes)
+add_resources(StoreRouter.routes)
 
 
 if __name__ == "__main__":

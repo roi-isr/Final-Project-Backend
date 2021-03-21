@@ -23,7 +23,7 @@ class ContactRouter:
         @staticmethod
         def post():
             contact_handler = ContactHandler()
-            data = request.get_json(force=True).values()
+            data = list(request.get_json(force=True).values())
             return contact_handler.insert(data)
 
     class ContactUsDelete(Resource):

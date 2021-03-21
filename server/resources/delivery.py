@@ -5,7 +5,7 @@ from flask_jwt_extended import jwt_required
 
 
 class DeliveryRouter:
-    # Defines the Retrieving of contact-us information API endpoint
+    # Defines the Retrieving of delivery information API endpoint
     class DeliveryGetAll(Resource):
         @jwt_required()
         def get(self):
@@ -19,18 +19,17 @@ class DeliveryRouter:
         @jwt_required()
         def post():
             delivery_handler = DeliveryHandler()
-            data = request.get_json(force=True).values()
+            data = list(request.get_json(force=True).values())
             return delivery_handler.insert(data)
 
-    class DeliveryPut(Resource):
+    class DeliveryDeleteUpdate(Resource):
         @staticmethod
         @jwt_required()
-        def put(code):
+        def put(_id):
             delivery_handler = DeliveryHandler()
-            data = request.get_json(force=True).values()
-            return delivery_handler.update_item(code, data)
+            data = list(request.get_json(force=True).values())
+            return delivery_handler.update_item(_id, data)
 
-    class DeliveryDelete(Resource):
         @staticmethod
         @jwt_required()
         def delete(_id):
@@ -40,8 +39,7 @@ class DeliveryRouter:
     # Connect between path-->class
     routes = {'/deliveries': DeliveryGetAll,
               '/delivery': DeliveryPost,
-              '/delivery/update/<string:code>': DeliveryPut,
-              '/delivery/<string:_id>': DeliveryDelete}
+              '/delivery/<string:_id>': DeliveryDeleteUpdate}
 
 
 """

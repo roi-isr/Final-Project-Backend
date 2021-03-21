@@ -18,26 +18,34 @@ class StockRouter:
         @jwt_required()
         def post():
             stock_handler = StockHandler()
-            data = request.get_json(force=True).values()
+            data = list(request.get_json(force=True).values())
             return stock_handler.insert(data)
 
-    class StockPut(Resource):
+    class StockDeleteUpdate(Resource):
         @staticmethod
         @jwt_required()
-        def put(code):
+        def put(_id):
             stock_handler = StockHandler()
-            data = request.get_json(force=True).values()
-            return stock_handler.update_item(code, data)
+            data = list(request.get_json(force=True).values())
+            return stock_handler.update_item(_id, data)
 
-    class StockDelete(Resource):
         @staticmethod
         @jwt_required()
-        def delete(code):
+        def delete(_id):
             stock_handler = StockHandler()
-            return stock_handler.delete_item(code)
+            return stock_handler.delete_item(_id)
+
+    class StockUpdateStatus(Resource):
+        @staticmethod
+        @jwt_required()
+        def put(_id):
+            stock_handler = StockHandler()
+            # Extract status
+            wanted_status = list(request.get_json(force=True).values())[0]
+            return stock_handler.update_item_status(_id, wanted_status)
 
     # Connect between path-->class
     routes = {'/stocks': StockGetAll,
               '/stock': StockPost,
-              '/stock/update/<string:code>': StockPut,
-              '/stock/<string:code>': StockDelete}
+              '/stock/<string:_id>': StockDeleteUpdate,
+              '/stock/update-status/<string:_id>': StockUpdateStatus}

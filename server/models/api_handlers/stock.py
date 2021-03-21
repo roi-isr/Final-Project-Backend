@@ -1,6 +1,7 @@
 from server.database.queries.stock import *
 from .basic_handler import ApiHandler
 from typing import List
+from flask import jsonify
 
 
 class StockHandler(ApiHandler):
@@ -28,6 +29,15 @@ class StockHandler(ApiHandler):
         keys_str = ', '.join(self.named_values[1:-1])
         fixed_query = UPDATE_STOCK_ITEM_QUERY.format(keys_str)
         super()._update_item(fixed_query, package_id, new_package_list)
+        return self._response
+
+    def update_item_status(self, package_id: str, wanted_status: str):
+        # status validation
+        if not (wanted_status == 'בחנות' or wanted_status == 'לא בחנות'):
+            self._response = self._build_response(data=jsonify({"message": "Invalid body content"}),
+                                                  status_code=400)
+        else:
+            super()._update_item(UPDATE_STOCK_STATUS_QUERY, package_id, wanted_status)
         return self._response
 
     def delete_item(self, package_id: str):
