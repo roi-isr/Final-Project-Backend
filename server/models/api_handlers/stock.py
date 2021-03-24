@@ -17,10 +17,12 @@ class StockHandler(ApiHandler):
         return self._response
 
     def fetch_all_data(self):
+        super()._create_table(CREATE_STOCK_QUERY)
         super()._fetch_all_data(GET_STOCK_ALL_QUERY, self.named_values)
         return self._response
 
     def fetch_data_by_code(self, package_code: str):
+        super()._create_table(CREATE_STOCK_QUERY)
         super()._fetch_data(GET_STOCK_ALL_QUERY, package_code, self.named_values)
         return self._response
 

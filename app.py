@@ -9,6 +9,8 @@ from server.resources.contact import ContactRouter
 from server.resources.stock import StockRouter
 from server.resources.delivery import DeliveryRouter
 from server.resources.store import StoreRouter
+from server.resources.sell import SellRouter
+from server.resources.diamond_offer import OfferRouter
 from flask_cors import CORS
 import os
 
@@ -33,7 +35,8 @@ add_resources(ContactRouter.routes)
 add_resources(StockRouter.routes)
 add_resources(DeliveryRouter.routes)
 add_resources(StoreRouter.routes)
-
+add_resources(SellRouter.routes)
+add_resources(OfferRouter.routes)
 
 if __name__ == "__main__":
     app.run(debug=True)

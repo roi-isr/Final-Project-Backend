@@ -16,6 +16,7 @@ class DeliveryHandler(ApiHandler):
         return self._response
 
     def fetch_all_data(self):
+        super()._create_table(CREATE_DELIVERY_QUERY)
         super()._fetch_all_data(GET_DELIVERY_ALL_QUERY, self.named_values)
         return self._response
 

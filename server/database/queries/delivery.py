@@ -16,7 +16,8 @@ INSERT_DELIVERY_QUERY = """INSERT INTO delivery
                            RETURNING delivery_id"""
 
 GET_DELIVERY_ALL_QUERY = """SELECT *
-                            FROM delivery"""
+                            FROM delivery
+                            ORDER BY send_date DESC"""
 
 UPDATE_DELIVERY_ITEM_QUERY = """UPDATE delivery
                              SET ({})=%s

@@ -9,10 +9,12 @@ class ContactHandler(ApiHandler):
         self.named_values = ["id", "email", "name", "phone", "content", "create_at"]
 
     def get_info(self, email: str):
+        super()._create_table(CREATE_TABLE_QUERY)
         super()._fetch_data(GET_CONTACT_QUERY, email, self.named_values)
         return self._response
 
     def get_info_all(self):
+        super()._create_table(CREATE_TABLE_QUERY)
         super()._fetch_all_data(GET_CONTACT_ALL_QUERY, self.named_values)
         return self._response
 
