@@ -34,4 +34,15 @@ UPDATE_STOCK_STATUS_QUERY = """UPDATE stock
                                RETURNING stock_id"""
 
 DELETE_STOCK_ITEM = """DELETE FROM stock
-                         WHERE stock_id=%s"""
+                       WHERE stock_id=%s"""
+
+STOCK_TO_OFFER_ALL_QUERY = """SELECT stock.stock_id, COUNT(*)
+                              FROM stock INNER JOIN offer
+                              ON stock.stock_id=offer.package_id
+                              GROUP BY stock.stock_id"""
+
+STOCK_TO_OFFER_ONE_QUERY = """SELECT stock.package_model, stock.code, offer.name, offer.phone, offer.email, 
+                                     offer.offered_weight, offer.offered_price, offer.additional_comments
+                              FROM stock INNER JOIN offer
+                              ON stock.stock_id=offer.package_id
+                              WHERE stock.stock_id=%s"""

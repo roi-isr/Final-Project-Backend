@@ -15,11 +15,10 @@ class OfferRouter:
     # Defines the Update of contact-us information API endpoint
     class OfferPost(Resource):
         @staticmethod
-        @jwt_required()
-        def post():
+        def post(package_id):
             offer_handler = OfferHandler()
             data = list(request.get_json(force=True).values())
-            return offer_handler.insert(data)
+            return offer_handler.insert(data, package_id)
 
     class OfferDeleteUpdate(Resource):
         @staticmethod
@@ -30,5 +29,5 @@ class OfferRouter:
 
     # Connect between path-->class
     routes = {'/offers': OfferGetAll,
-              '/offer': OfferPost,
+              '/offer/<string:package_id>': OfferPost,
               '/offer/<string:_id>': OfferDeleteUpdate}

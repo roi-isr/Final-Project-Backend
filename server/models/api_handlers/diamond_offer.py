@@ -10,9 +10,12 @@ class OfferHandler(ApiHandler):
                              "phone", "email", "offered_weight",
                              "offered_price", "additional_comments"]
 
-    def insert(self, package_list: List[str]):
+    def insert(self, package_list, _id: str):
         super()._create_table(CREATE_OFFER_QUERY)
-        super()._insert(INSERT_OFFER_QUERY, package_list)
+        # With ID
+        package_list_fixed = package_list
+        package_list_fixed.insert(0, int(_id))
+        super()._insert(INSERT_OFFER_QUERY, package_list_fixed)
         return self._response
 
     def fetch_all_data(self):

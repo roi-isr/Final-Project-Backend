@@ -44,8 +44,24 @@ class StockRouter:
             wanted_status = list(request.get_json(force=True).values())[0]
             return stock_handler.update_item_status(_id, wanted_status)
 
+    class StocksToOffersCounter(Resource):
+        @staticmethod
+        @jwt_required()
+        def get():
+            stock_handler = StockHandler()
+            return stock_handler.get_stocks_to_offers_counter()
+
+    class StockToOffers(Resource):
+        @staticmethod
+        @jwt_required()
+        def get(stock_id):
+            stock_handler = StockHandler()
+            return stock_handler.get_stock_to_offers(stock_id)
+
     # Connect between path-->class
     routes = {'/stocks': StockGetAll,
               '/stock': StockPost,
               '/stock/<string:_id>': StockDeleteUpdate,
-              '/stock/update-status/<string:_id>': StockUpdateStatus}
+              '/stock/update-status/<string:_id>': StockUpdateStatus,
+              '/stock-to-offers/<string:stock_id>': StockToOffers,
+              '/stocks-to-offers-counter': StocksToOffersCounter}

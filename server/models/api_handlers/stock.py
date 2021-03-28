@@ -2,6 +2,7 @@ from server.database.queries.stock import *
 from .basic_handler import ApiHandler
 from typing import List
 from flask import jsonify
+from server.database.database import Database
 
 
 class StockHandler(ApiHandler):
@@ -10,6 +11,8 @@ class StockHandler(ApiHandler):
         self.named_values = ["stock_id", "package_model", "weight_in_karat",
                              "cost_per_karat", "clearance", "color", "code", "comments",
                              "sell_date", "status"]
+        self.offer_named_values = ["package_model", "code", "name", "phone", "email", "offered_weight",
+                                   "offered_price", "additional_comments"]
 
     def insert(self, package_list: List[str]):
         super()._create_table(CREATE_STOCK_QUERY)
@@ -44,4 +47,25 @@ class StockHandler(ApiHandler):
 
     def delete_item(self, package_id: str):
         super()._delete_item(DELETE_STOCK_ITEM, package_id)
+        return self._response
+
+    def get_stocks_to_offers_counter(self):
+        database = Database()
+        data = database.fetch_all_data(STOCK_TO_OFFER_ALL_QUERY)
+        self.__handle_stock_to_offer_dict(data)
+        return self._response
+
+    # Transer the result into a dictionary
+    def __handle_stock_to_offer_dict(self, data):
+        if data:
+            data_dict = {data[i][0]: data[i][1]
+                         for i in range(len(data))}
+            self._response = self._build_response(data=jsonify(data_dict),
+                                                  status_code=200)
+        else:
+            self._response = self._build_response(data=jsonify({'message': 'Item doesn\'t found'}),
+                                                  status_code=404)
+
+    def get_stock_to_offers(self, stock_id):
+        super()._fetch_data(STOCK_TO_OFFER_ONE_QUERY, stock_id, self.offer_named_values)
         return self._response
