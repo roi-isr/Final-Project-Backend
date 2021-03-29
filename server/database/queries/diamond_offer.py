@@ -24,4 +24,4 @@ UPDATE_OFFER_ITEM_QUERY = """UPDATE offer
                              RETURNING offer_id"""
 
 DELETE_OFFER_ITEM = """DELETE FROM offer
-                      WHERE offer_id=%s"""
+                       WHERE offer_id=%s"""

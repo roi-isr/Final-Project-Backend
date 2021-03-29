@@ -11,8 +11,8 @@ class StockHandler(ApiHandler):
         self.named_values = ["stock_id", "package_model", "weight_in_karat",
                              "cost_per_karat", "clearance", "color", "code", "comments",
                              "sell_date", "status"]
-        self.offer_named_values = ["package_model", "code", "name", "phone", "email", "offered_weight",
-                                   "offered_price", "additional_comments"]
+        self.offer_named_values = ["offer_id", "stock_id", "package_model", "code", "name", "phone", "email",
+                                   "offered_weight", "offered_price", "additional_comments"]
 
     def insert(self, package_list: List[str]):
         super()._create_table(CREATE_STOCK_QUERY)
@@ -46,8 +46,12 @@ class StockHandler(ApiHandler):
         return self._response
 
     def delete_item(self, package_id: str):
+        self.__delete_related_offers(package_id)
         super()._delete_item(DELETE_STOCK_ITEM, package_id)
         return self._response
+
+    def __delete_related_offers(self, package_id: str):
+        super()._delete_item(DELETE_RELATED_OFFERS_QUERY, package_id)
 
     def get_stocks_to_offers_counter(self):
         database = Database()
@@ -55,7 +59,7 @@ class StockHandler(ApiHandler):
         self.__handle_stock_to_offer_dict(data)
         return self._response
 
-    # Transer the result into a dictionary
+    # Transfer the result into a dictionary
     def __handle_stock_to_offer_dict(self, data):
         if data:
             data_dict = {data[i][0]: data[i][1]

@@ -41,8 +41,12 @@ STOCK_TO_OFFER_ALL_QUERY = """SELECT stock.stock_id, COUNT(*)
                               ON stock.stock_id=offer.package_id
                               GROUP BY stock.stock_id"""
 
-STOCK_TO_OFFER_ONE_QUERY = """SELECT stock.package_model, stock.code, offer.name, offer.phone, offer.email, 
-                                     offer.offered_weight, offer.offered_price, offer.additional_comments
+STOCK_TO_OFFER_ONE_QUERY = """SELECT offer.offer_id, stock.stock_id, stock.package_model, stock.code, offer.name,
+                                     offer.phone, offer.email, offer.offered_weight, offer.offered_price, 
+                                     offer.additional_comments
                               FROM stock INNER JOIN offer
                               ON stock.stock_id=offer.package_id
                               WHERE stock.stock_id=%s"""
+
+DELETE_RELATED_OFFERS_QUERY = """DELETE FROM offer
+                                 WHERE package_id=%s"""
