@@ -11,6 +11,7 @@ from server.resources.delivery import DeliveryRouter
 from server.resources.store import StoreRouter
 from server.resources.sell import SellRouter
 from server.resources.diamond_offer import OfferRouter
+from server.resources.ML_predictions import PredRouter
 from flask_cors import CORS
 import os
 
@@ -37,6 +38,7 @@ add_resources(DeliveryRouter.routes)
 add_resources(StoreRouter.routes)
 add_resources(SellRouter.routes)
 add_resources(OfferRouter.routes)
+add_resources(PredRouter.routes)
 
 if __name__ == "__main__":
     app.run(debug=True)
