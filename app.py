@@ -1,6 +1,5 @@
 """ Main app, implementing Restful-API endpoints with Flask frameworks - getting requests from frontend users and
 sending back a response """
-
 from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
@@ -12,7 +11,7 @@ from server.resources.store import StoreRouter
 from server.resources.sell import SellRouter
 from server.resources.diamond_offer import OfferRouter
 from server.resources.ML_predictions import PredRouter
-from server.ML.run_scheduler import sched
+from server.ML.test import build_ml_models
 from threading import Thread
 
 from flask_cors import CORS
@@ -43,9 +42,14 @@ add_resources(SellRouter.routes)
 add_resources(OfferRouter.routes)
 add_resources(PredRouter.routes)
 
+
+# @app.before_first_request
+# def run_ml():
+#     thread = Thread(target=build_ml_models)
+#     thread.start()
+build_ml_models()
+
 if __name__ == "__main__":
-    thread = Thread(target=sched)
-    thread.start()
     app.run()
 
 # debug=True

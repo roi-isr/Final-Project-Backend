@@ -28,7 +28,7 @@ def run_algorithms(X_train, X_test, y_train, y_test):
     models_list = [
         run_linear_regression(X_train, X_test, y_train, y_test),
         # run_polynomial_regression(X_train, X_test, y_train, y_test)
-        run_svm_regression(X_train, X_test, y_train, y_test),
+        # run_svm_regression(X_train, X_test, y_train, y_test),
         run_decision_tree_regression(X_train, X_test, y_train, y_test),
         run_random_forest_regression(X_train, X_test, y_train, y_test),
         # run_adaboost_regression(X_train, X_test, y_train, y_test)
@@ -181,17 +181,16 @@ def run_decision_tree_regression(X_train, X_test, y_train, y_test):
 # average of all
 def run_random_forest_regression(X_train, X_test, y_train, y_test):
     # Parameters of the model - the number of trees to build (estimators)
-    model_params = {'n_estimators': [10, 50, 100]}
-    random_forest_regressor = RandomForestRegressor(random_state=42)
-    grid_search_random_forest_regressor = GridSearchCV(random_forest_regressor, model_params)
+    model_params = {'n_estimators': [10]}
+    random_forest_regressor = RandomForestRegressor(random_state=42, n_estimators=20)
     # Train the best parameter's model (found by grid search algorithm) on the train set
-    grid_search_random_forest_regressor.fit(X_train, y_train)
-    y_pred = scaler_y.inverse_transform(grid_search_random_forest_regressor.predict(X_test))
+    random_forest_regressor.fit(X_train, y_train)
+    y_pred = scaler_y.inverse_transform(random_forest_regressor.predict(X_test))
     test_accuracy = calc_test_accuracy(y_test=scaler_y.inverse_transform(y_test), y_pred=y_pred)
-    cv_accuracy = apply_cross_validation(grid_search_random_forest_regressor, X_train, y_train, cv=5)
+    cv_accuracy = apply_cross_validation(random_forest_regressor, X_train, y_train, cv=5)
     avg_accuracy = (test_accuracy + cv_accuracy) / 2
     print("The accuracy score of the polynomial with random forest is: {:.4f}%".format(avg_accuracy * 100))
-    return grid_search_random_forest_regressor, avg_accuracy, "Random Forest Regression"
+    return random_forest_regressor, avg_accuracy, "Random Forest Regression"
 
 
 # run adaboost regression with 10 expertises - default is decision tree with maximum depth of 3
