@@ -12,6 +12,9 @@ from server.resources.store import StoreRouter
 from server.resources.sell import SellRouter
 from server.resources.diamond_offer import OfferRouter
 from server.resources.ML_predictions import PredRouter
+from server.ML.run_scheduler import sched
+from threading import Thread
+
 from flask_cors import CORS
 import os
 
@@ -41,4 +44,8 @@ add_resources(OfferRouter.routes)
 add_resources(PredRouter.routes)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    thread = Thread(target=sched)
+    thread.start()
+    app.run()
+
+# debug=True

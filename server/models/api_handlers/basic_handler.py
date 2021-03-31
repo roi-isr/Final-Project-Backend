@@ -1,6 +1,7 @@
 from typing import List, Tuple
 from flask import jsonify
 from server.database.database import Database
+import psycopg2
 
 
 class ApiHandler:
@@ -61,7 +62,7 @@ class ApiHandler:
             _id = database.insert_data(query, tuple_data)
             self._response = self._build_response(data=jsonify({"message": "Successful POST request", "_id": _id}),
                                                   status_code=201)
-        except errors.UniqueViolation:
+        except psycopg2.errors.UniqueViolation:
             self._response = self._build_response(data=jsonify({"message": "Item already exists"}),
                                                   status_code=400)
         except:

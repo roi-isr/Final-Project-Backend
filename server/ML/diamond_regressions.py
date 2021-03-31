@@ -9,6 +9,7 @@ from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 from sklearn.feature_selection import SelectKBest
 import os
+
 global scaler_X, scaler_y, encoders, polynomial_regressor
 
 
@@ -27,9 +28,9 @@ def run_algorithms(X_train, X_test, y_train, y_test):
     models_list = [
         run_linear_regression(X_train, X_test, y_train, y_test),
         # run_polynomial_regression(X_train, X_test, y_train, y_test)
-        # run_svm_regression(X_train, X_test, y_train, y_test),
+        run_svm_regression(X_train, X_test, y_train, y_test),
         run_decision_tree_regression(X_train, X_test, y_train, y_test),
-        # run_random_forest_regression(X_train, X_test, y_train, y_test),
+        run_random_forest_regression(X_train, X_test, y_train, y_test),
         # run_adaboost_regression(X_train, X_test, y_train, y_test)
     ]
     max_accuracy_model = max(models_list, key=lambda model: model[1])
@@ -211,17 +212,18 @@ def run_adaboost_regression(X_train, X_test, y_train, y_test):
 
 
 def build_and_test_regression_models():
+    global encoders, scaler_X, scaler_y
     diamond_dataset = read_data()
     attributes_count = diamond_dataset.shape[1] - 1
     X_train, X_test, y_train, y_test = pre_processing(diamond_dataset)
     features_ranks = k_best_features_exec(X_train, y_train, diamond_dataset.columns, attributes_count)
     max_accuracy_model = run_algorithms(X_train, X_test, y_train, y_test)
     # Return the model itself
-    return max_accuracy_model[0], features_ranks
+    return max_accuracy_model[0], features_ranks, encoders, scaler_X, scaler_y
 
 
 # Get a sample data from the user (as an input), and predict the price of the diamond
-def predict_result(regression_model, data):
+def predict_result(regression_model, encoders, scaler_X, scaler_y, data):
     new_data = np.array(data.copy())
     # Encoding input data
     categorical_data_indexes = [1, 2, 3]
@@ -236,7 +238,7 @@ def predict_result(regression_model, data):
 
 
 # Make some predictions (up to the user) over the best selected model
-def make_predictions(best_regression_model, user_features):
+def make_predictions(best_regression_model, scalers, user_features):
     # Making a prediction out of the best chosen model
-    predicted_result = predict_result(best_regression_model, [user_features])
+    predicted_result = predict_result(best_regression_model, *scalers, [user_features])
     return predicted_result

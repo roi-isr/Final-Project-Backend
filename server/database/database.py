@@ -4,7 +4,6 @@ from typing import List, Tuple
 import psycopg2
 from server.config.connection_config import CONNECTION_INFO
 
-
 class Database:
     def __init__(self):
         self.connection = self.__connect()
