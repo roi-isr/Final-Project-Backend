@@ -51,14 +51,6 @@ class AdminRouter:
             response.status_code = 200
             return response
 
-    class VerifyAuthUser(Resource):
-        # Indicates the requirement of an JWT authentication in purpose of reaching the following resources
-        @staticmethod
-        @jwt_required()
-        def get():
-            admin_handler = AdminHandler()
-            return admin_handler.verified()
-
     # Defines Adding an Admin API endpoint
     class AddAdmin(Resource):
         @staticmethod
@@ -86,6 +78,5 @@ class AdminRouter:
     # Connect between path-->class
     routes = {'/auth': AdminLogIn,
               '/refresh': TokenRefresher,
-              '/verify-token': VerifyAuthUser,
               '/add-admin': AddAdmin,
               '/drop-admin': DelAdminTable}

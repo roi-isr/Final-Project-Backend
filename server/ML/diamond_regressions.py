@@ -1,16 +1,15 @@
 import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler, LabelEncoder, PolynomialFeatures
+from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.linear_model import LinearRegression
-from sklearn.svm import SVR
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor, AdaBoostRegressor
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
-from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.feature_selection import SelectKBest
 import os
 
-global scaler_X, scaler_y, encoders, polynomial_regressor
+global scaler_X, scaler_y, encoders
 
 
 # Read relevant data from 'diamonds.csv' file
@@ -27,11 +26,8 @@ def read_data():
 def run_algorithms(X_train, X_test, y_train, y_test):
     models_list = [
         run_linear_regression(X_train, X_test, y_train, y_test),
-        # run_polynomial_regression(X_train, X_test, y_train, y_test)
-        # run_svm_regression(X_train, X_test, y_train, y_test),
         run_decision_tree_regression(X_train, X_test, y_train, y_test),
-        run_random_forest_regression(X_train, X_test, y_train, y_test),
-        # run_adaboost_regression(X_train, X_test, y_train, y_test)
+        run_random_forest_regression(X_train, X_test, y_train, y_test)
     ]
     max_accuracy_model = max(models_list, key=lambda model: model[1])
     print("""
@@ -123,45 +119,6 @@ def run_linear_regression(X_train, X_test, y_train, y_test):
     return linear_regressor, avg_accuracy, "Linear Regression"
 
 
-# Run polynomial regression model - with degrees of 2, 3, and 4 respectively
-def run_polynomial_regression(X_train, X_test, y_train, y_test):
-    global polynomial_regressor
-    polynomial_regressor = []
-    model_test_degrees = [2, 3, 4]
-    polynomial_model_list = []
-    for i, curr_degree in enumerate(model_test_degrees):
-        polynomial_regressor.append(PolynomialFeatures(degree=curr_degree))
-        # Build a polynomial model
-        X_poly = polynomial_regressor[i].fit_transform(X_train)
-        linear_regressor = LinearRegression()
-        # Train the model on train set
-        linear_regressor.fit(X_poly, y_train)
-        y_pred = scaler_y.inverse_transform(linear_regressor.predict(polynomial_regressor[i].transform(X_test)))
-        test_accuracy = calc_test_accuracy(y_test=scaler_y.inverse_transform(y_test), y_pred=y_pred)
-        cv_accuracy = apply_cross_validation(linear_regressor, X_train, y_train, cv=10)
-        avg_accuracy = (test_accuracy + cv_accuracy) / 2
-        print("The accuracy score of the polynomial regression with {} degree is: {:.4f}%".format(curr_degree,
-                                                                                                  avg_accuracy * 100))
-        polynomial_model_list.append(
-            (linear_regressor, avg_accuracy, "{} Degree Polynomial Regression".format(curr_degree)))
-    # Return the best fitting model (degree)
-    return max(polynomial_model_list, key=lambda model: model[1])
-
-
-# Run SVM (Support Vector Machine) regression model
-def run_svm_regression(X_train, X_test, y_train, y_test):
-    # Build a SVM model with the 'rbf' kernel
-    svm_regressor = SVR(kernel='rbf')
-    # Train the model on train set
-    svm_regressor.fit(X_train, y_train)
-    y_pred = scaler_y.inverse_transform(svm_regressor.predict(X_test))
-    test_accuracy = calc_test_accuracy(y_test=scaler_y.inverse_transform(y_test), y_pred=y_pred)
-    cv_accuracy = apply_cross_validation(svm_regressor, X_train, y_train, cv=3)
-    avg_accuracy = (test_accuracy + cv_accuracy) / 2
-    print("The accuracy score of the polynomial regression with SVM regression is: {:.4f}%".format(avg_accuracy * 100))
-    return svm_regressor, avg_accuracy, "SVM Regression"
-
-
 # Run decision tree regression model
 def run_decision_tree_regression(X_train, X_test, y_train, y_test):
     # Build the model with 'best' model - with considers all of the attributes in the calculation
@@ -181,7 +138,6 @@ def run_decision_tree_regression(X_train, X_test, y_train, y_test):
 # average of all
 def run_random_forest_regression(X_train, X_test, y_train, y_test):
     # Parameters of the model - the number of trees to build (estimators)
-    model_params = {'n_estimators': [10]}
     random_forest_regressor = RandomForestRegressor(random_state=42, n_estimators=20)
     # Train the best parameter's model (found by grid search algorithm) on the train set
     random_forest_regressor.fit(X_train, y_train)
@@ -191,23 +147,6 @@ def run_random_forest_regression(X_train, X_test, y_train, y_test):
     avg_accuracy = (test_accuracy + cv_accuracy) / 2
     print("The accuracy score of the polynomial with random forest is: {:.4f}%".format(avg_accuracy * 100))
     return random_forest_regressor, avg_accuracy, "Random Forest Regression"
-
-
-# run adaboost regression with 10 expertises - default is decision tree with maximum depth of 3
-def run_adaboost_regression(X_train, X_test, y_train, y_test):
-    model_params = {'learning_rate': [0.1, 1, 10]}
-    adaboost_regressor = AdaBoostRegressor(random_state=42, n_estimators=200, learning_rate=0.1)
-    grid_search_adaboost_regressor = GridSearchCV(adaboost_regressor, model_params)
-    # Train the model on the train set
-    grid_search_adaboost_regressor.fit(X_train, y_train)
-    # Predict test results
-    y_pred = scaler_y.inverse_transform(grid_search_adaboost_regressor.predict(X_test))
-    test_accuracy = calc_test_accuracy(y_test=scaler_y.inverse_transform(y_test), y_pred=y_pred)
-    cv_accuracy = apply_cross_validation(grid_search_adaboost_regressor, X_train, y_train, cv=5)
-    avg_accuracy = (test_accuracy + cv_accuracy) / 2
-    print("The accuracy score of the polynomial regression with adaboost regression is: {:.4f}%".format(
-        avg_accuracy * 100))
-    return grid_search_adaboost_regressor, avg_accuracy, "Adaboost Regression"
 
 
 def build_and_test_regression_models():
@@ -222,16 +161,16 @@ def build_and_test_regression_models():
 
 
 # Get a sample data from the user (as an input), and predict the price of the diamond
-def predict_result(regression_model, encoders, scaler_X, scaler_y, data):
+def predict_result(regression_model, encoders_arg, scaler_X_arg, scaler_y_arg, data):
     new_data = np.array(data.copy())
     # Encoding input data
     categorical_data_indexes = [1, 2, 3]
     for data_index in categorical_data_indexes:
         curr_categorical_train_data = new_data[:, data_index]
-        new_data[:, data_index] = encoders[data_index].transform(curr_categorical_train_data)
+        new_data[:, data_index] = encoders_arg[data_index].transform(curr_categorical_train_data)
     # Normalizing input data
-    normalized_data = scaler_X.transform(new_data)
-    predicted_price = scaler_y.inverse_transform(regression_model.predict(normalized_data))
+    normalized_data = scaler_X_arg.transform(new_data)
+    predicted_price = scaler_y_arg.inverse_transform(regression_model.predict(normalized_data))
     # Return formatted price with separated commas and a dollar sign ('$')
     return "{:,}$".format(int(predicted_price[0]))
 

@@ -22,9 +22,6 @@ class AdminAdviseRouter:
             data = list(request.get_json(force=True).values())
             return admin_advise_handler.insert(data)
 
-
     # Connect between path-->class
     routes = {'/admin-advises': AdminAdviseGetAll,
               '/admin-advise': AdminAdvisePost}
-
-

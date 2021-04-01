@@ -4,6 +4,7 @@ from typing import List, Tuple
 import psycopg2
 from server.config.connection_config import CONNECTION_INFO
 
+
 class Database:
     def __init__(self):
         self.connection = self.__connect()
@@ -21,7 +22,7 @@ class Database:
             cur.execute(query)
 
     # Insert data for table in the DB
-    def insert_data(self, query: str, data: Tuple[str]):
+    def insert_data(self, query: str, data: Tuple):
         with self.connection as conn:
             cur = conn.cursor()
             cur.execute(query, data)
