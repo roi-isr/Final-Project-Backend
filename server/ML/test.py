@@ -7,8 +7,8 @@ from server.ML.model_storage import ModelStorage
 
 def build_ml_models():
     # Building and testing the regression models over the diamonds dataset
-    best_regression_model, features_ranks, encoders, scaler_X, scaler_y = build_and_test_regression_models()
-    ModelStorage.store_model_in_db(best_regression_model, encoders, scaler_X, scaler_y)
+    best_regression_model, features_ranks, scaler_X, scaler_y = build_and_test_regression_models()
+    ModelStorage.store_model_in_db(best_regression_model, scaler_X, scaler_y)
 
 
 def exec_predictions(data_list):

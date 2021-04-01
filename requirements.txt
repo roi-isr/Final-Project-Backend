@@ -9,3 +9,4 @@ numpy
 pandas
 sklearn
 APScheduler==3.0.0
+SQLAlchemy

@@ -19,11 +19,11 @@ class ModelStorage:
         return pickle.loads(single_bytes)
 
     @staticmethod
-    def store_model_in_db(model, encoders, scaler_X, scaler_y):
+    def store_model_in_db(model, scaler_X, scaler_y):
         database = Database()
         database.create_table(CREATE_MODEL_QUERY)
         database.drop_table(DELETE_ALL_MODELS_QUERY)
-        pickled_tuple = ModelStorage.__get_tuple_pickled((model, encoders, scaler_X, scaler_y))
+        pickled_tuple = ModelStorage.__get_tuple_pickled((model, scaler_X, scaler_y))
         database.insert_data(INSERT_MODEL_QUERY, pickled_tuple)
         database.close_connection()
 
@@ -34,5 +34,5 @@ class ModelStorage:
         print(get_data)
         database.close_connection()
         unpickled_model = ModelStorage.__get_unpickled(get_data[1])
-        unpickled_scalers_tuple = ModelStorage.__get_tuple_unpickled((get_data[2], get_data[3], get_data[4]))
+        unpickled_scalers_tuple = ModelStorage.__get_tuple_unpickled((get_data[2], get_data[3]))
         return unpickled_model, unpickled_scalers_tuple
