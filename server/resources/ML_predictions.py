@@ -1,7 +1,7 @@
 from flask_restful import Resource, request
 from flask import jsonify
 from flask_jwt_extended import jwt_required
-from server.ML.test import exec_predictions
+from server.ML.ML_main import exec_predictions
 
 
 class PredRouter:

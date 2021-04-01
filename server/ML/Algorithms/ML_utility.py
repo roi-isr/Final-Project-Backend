@@ -104,7 +104,7 @@ class RegressionCustom:
         y = y.reshape(len(y), 1)
 
         # Split the dataset into train and test sets
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
         self.encode_data()
 
@@ -184,4 +184,4 @@ class RegressionCustom:
         normalized_data = scaler_X_arg.transform(new_data)
         predicted_price = scaler_y_arg.inverse_transform(regression_model.predict(normalized_data))
         # Return formatted price with separated commas and a dollar sign ('$')
-        return "{:,}$".format(int(predicted_price[0]))
+        return int(predicted_price[0])

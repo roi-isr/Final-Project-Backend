@@ -1,4 +1,4 @@
-from server.ML.ML_utility import *
+from server.ML.Algorithms.ML_utility import *
 import pandas as pd
 import os
 

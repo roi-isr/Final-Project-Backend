@@ -12,7 +12,7 @@ from server.resources.sell import SellRouter
 from server.resources.diamond_offer import OfferRouter
 from server.resources.ML_predictions import PredRouter
 from server.resources.admin_price_advise import AdminAdviseRouter
-from server.ML.test import build_ml_models
+from server.ML.ML_main import build_ml_models, build_ml_advise_models
 
 from flask_cors import CORS
 import os
@@ -43,7 +43,7 @@ add_resources(OfferRouter.routes)
 add_resources(PredRouter.routes)
 add_resources(AdminAdviseRouter.routes)
 
-
+build_ml_advise_models()
 build_ml_models()
 
 if __name__ == "__main__":

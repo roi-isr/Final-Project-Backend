@@ -1,5 +1,5 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
-from server.ML.test import build_ml_models
+from server.ML.ML_main import build_ml_models
 
 b_sched = BlockingScheduler()
 
