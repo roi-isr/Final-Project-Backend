@@ -13,9 +13,9 @@ def build_ml_models():
 
 def exec_predictions(data_list):
     # Make some predictions (up to the user) over the best selected model
-    try:
-        best_regression_model, scalers = ModelStorage.get_model_from_db()
-        predicted_price = make_predictions(best_regression_model, scalers, data_list)
-        return predicted_price
-    except:
-        print("\nInvalid data entered. Please enter data again.")
+    # try:
+    best_regression_model, scalers = ModelStorage.get_model_from_db()
+    predicted_price = make_predictions(best_regression_model, scalers, data_list)
+    return predicted_price
+    # except:
+    #     print("\nInvalid data entered. Please enter data again.")

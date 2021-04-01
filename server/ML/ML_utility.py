@@ -179,7 +179,7 @@ class RegressionCustom:
         categorical_data_indexes = [1, 2, 3]
         for data_index in categorical_data_indexes:
             curr_categorical_train_data = new_data[:, data_index]
-            new_data[:, data_index] = labels[data_index-1][new_data[:, data_index]]
+            new_data[:, data_index] = labels[data_index-1][new_data[:, data_index][0]]
         # Normalizing input data
         normalized_data = scaler_X_arg.transform(new_data)
         predicted_price = scaler_y_arg.inverse_transform(regression_model.predict(normalized_data))
