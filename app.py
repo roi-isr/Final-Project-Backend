@@ -11,8 +11,8 @@ from server.resources.store import StoreRouter
 from server.resources.sell import SellRouter
 from server.resources.diamond_offer import OfferRouter
 from server.resources.ML_predictions import PredRouter
+from server.resources.admin_price_advise import AdminAdviseRouter
 from server.ML.test import build_ml_models
-from threading import Thread
 
 from flask_cors import CORS
 import os
@@ -41,12 +41,9 @@ add_resources(StoreRouter.routes)
 add_resources(SellRouter.routes)
 add_resources(OfferRouter.routes)
 add_resources(PredRouter.routes)
+add_resources(AdminAdviseRouter.routes)
 
 
-# @app.before_first_request
-# def run_ml():
-#     thread = Thread(target=build_ml_models)
-#     thread.start()
 build_ml_models()
 
 if __name__ == "__main__":
