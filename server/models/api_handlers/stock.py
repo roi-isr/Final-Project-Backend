@@ -12,7 +12,7 @@ class StockHandler(ApiHandler):
                              "cost_per_karat", "clearance", "color", "code", "comments",
                              "sell_date", "status"]
         self.offer_named_values = ["offer_id", "stock_id", "package_model", "code", "name", "phone", "email",
-                                   "offered_weight", "offered_price", "additional_comments"]
+                                   "offered_weight", "offered_price", "additional_comments", "offer_date"]
 
     def insert(self, package_list: List[str]):
         super()._create_table(CREATE_STOCK_QUERY)

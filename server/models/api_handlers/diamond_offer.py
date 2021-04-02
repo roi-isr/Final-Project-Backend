@@ -8,7 +8,7 @@ class OfferHandler(ApiHandler):
         super().__init__()
         self.named_values = ["offer_id", "package_id", "name",
                              "phone", "email", "offered_weight",
-                             "offered_price", "additional_comments"]
+                             "offered_price", "additional_comments", "offer_date"]
 
     def insert(self, package_list, _id: str):
         super()._create_table(CREATE_OFFER_QUERY)

@@ -43,8 +43,8 @@ add_resources(OfferRouter.routes)
 add_resources(PredRouter.routes)
 add_resources(AdminAdviseRouter.routes)
 
-build_ml_advise_models()
-build_ml_models()
+# build_ml_advise_models()
+# build_ml_models()
 
 if __name__ == "__main__":
     app.run()
