@@ -10,7 +10,7 @@ class StockHandler(ApiHandler):
         super().__init__()
         self.named_values = ["stock_id", "package_model", "weight_in_karat",
                              "cost_per_karat", "clearance", "color", "code", "comments",
-                             "sell_date", "status"]
+                             "sell_date","cost_per_sell", "status"]
         self.offer_named_values = ["offer_id", "stock_id", "package_model", "code", "name", "phone", "email",
                                    "offered_weight", "offered_price", "additional_comments", "offer_date"]
 

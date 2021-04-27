@@ -1,4 +1,6 @@
 from server.database.queries.sell import *
+from server.database.queries.stock import *
+from server.database.database import *
 from .basic_handler import ApiHandler
 from typing import List
 
@@ -13,6 +15,14 @@ class SellHandler(ApiHandler):
     def insert(self, package_list: List[str]):
         super()._create_table(CREATE_SELL_QUERY)
         super()._insert(INSERT_SELL_QUERY, package_list)
+        db = Database()
+        code = package_list[0]
+        weight_to_reduce = float(package_list[2])
+        print(code)
+        stock_balance = float(db.fetch_specific_data(SELECT_STORE_STOCK, (code,))[0])
+        if stock_balance is not None and stock_balance - weight_to_reduce:
+            print(stock_balance - weight_to_reduce)
+            db.update_item(UPDATE_STORE_STOCK, weight_to_reduce, code)
         return self._response
 
     def fetch_all_data(self):

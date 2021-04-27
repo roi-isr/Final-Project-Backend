@@ -9,10 +9,20 @@ CREATE_STOCK_QUERY = """CREATE TABLE IF NOT EXISTS stock
                          code varchar(50) NOT NULL,                           
                          comments varchar(255),                           
                          sell_date DATE,
+                         cost_per_sell real NOT NULL,
                          status varchar(50) NOT NULL)"""
 
+SELECT_STORE_STOCK = """SELECT weight_in_karat
+                        FROM stock
+                        WHERE code=%s"""
+
+UPDATE_STORE_STOCK = """UPDATE stock
+                             SET weight_in_karat=weight_in_karat-CAST(%s AS REAL)
+                             WHERE code=%s
+                             RETURNING stock_id"""
+
 INSERT_STOCK_QUERY = """INSERT INTO stock 
-                        VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                         RETURNING stock_id"""
 
 GET_STOCK_ALL_QUERY = """SELECT *

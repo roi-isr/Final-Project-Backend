@@ -40,7 +40,7 @@ class Database:
         with self.connection as conn:
             cur = conn.cursor()
             cur.execute(query, data)
-        return cur.fetchall()
+        return cur.fetchone()
 
     def update_item(self, query: str, data: Tuple[str], _id: str):
         with self.connection as conn:

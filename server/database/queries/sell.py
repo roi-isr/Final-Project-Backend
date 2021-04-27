@@ -13,6 +13,7 @@ INSERT_SELL_QUERY = """INSERT INTO sell
                           VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s)
                           RETURNING sell_id"""
 
+
 GET_SELL_ALL_QUERY = """SELECT *
                          FROM sell
                          ORDER BY sell_date DESC"""
