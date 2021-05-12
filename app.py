@@ -47,6 +47,6 @@ add_resources(AdminAdviseRouter.routes)
 # build_ml_models()
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
 # debug=True

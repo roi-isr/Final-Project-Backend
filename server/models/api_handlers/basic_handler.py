@@ -33,10 +33,11 @@ class ApiHandler:
             self._response = self._build_response(data=jsonify({'message': 'Item doesn\'t found'}),
                                                   status_code=404)
 
-    def _fetch_data(self, query: str, data: str, named_values: List[str]):
+    # Fetch specific data (with WHERE)
+    def _fetch_data(self, query: str, identifier: str, named_values: List[str]):
         try:
             database = Database()
-            data = database.fetch_specific_data(query, (data,))
+            data = database.fetch_specific_data(query, (identifier,))
             self.__handle_data(data, named_values)
         except:
             self._response = self._build_response(data=jsonify({"message": "Internal server error"}),

@@ -40,6 +40,7 @@ labels = [{
     'FL': 10
 }]
 
+
 class RegressionCustom:
     def __init__(self, dataset):
         print("Starting regression process...")
