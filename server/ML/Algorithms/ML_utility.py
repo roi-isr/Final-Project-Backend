@@ -90,24 +90,31 @@ class RegressionCustom:
         self.y_test = self.scaler_y.transform(self.y_test)
 
     # Encoding classes (categorical data) to integers, beginning from 0 - dealing with categorical data
-    def encode_data(self):
+    def encode_data(self, labeled_indexes):
         # Marking the categorical data
-        categorical_data_indexes = [1, 2, 3]
-        for data_index in categorical_data_indexes:
-            self.X_train[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_train[:, data_index]])
-            self.X_test[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_test[:, data_index]])
+        categorical_data_indexes = labeled_indexes
+        if len(categorical_data_indexes) == 3:
+            for data_index in categorical_data_indexes:
+                self.X_train[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_train[:, data_index]])
+                self.X_test[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_test[:, data_index]])
+        elif len(categorical_data_indexes) == 1:
+            data_index = categorical_data_indexes[0]
+            self.X_train[:, data_index] = np.array([labels[data_index][i] for i in self.X_train[:, data_index]])
+            self.X_test[:, data_index] = np.array([labels[data_index][i] for i in self.X_test[:, data_index]])
 
     # Preprocessing the data before building the model, includes - splitting the data
     # into train and test sets, normalizing and encoding categorical data.
-    def pre_processing(self):
+    def pre_processing(self, labeled_indexes=[1, 2, 3]):
         X = self.dataset.iloc[:, :-1].values
+        print(X)
         y = self.dataset.iloc[:, -1].values
+        print(y)
         y = y.reshape(len(y), 1)
 
         # Split the dataset into train and test sets
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
-        self.encode_data()
+        self.encode_data(labeled_indexes)
 
         self.normalize_data()
 

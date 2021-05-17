@@ -1,4 +1,5 @@
 from flask_restful import Resource, request
+from server.resources.sell import SellHandler
 from flask import jsonify
 from flask_jwt_extended import jwt_required
 from server.ML.ML_main import exec_predictions
@@ -22,5 +23,15 @@ class PredRouter:
                 return response
             price_prediction = exec_predictions(data_list)
             return jsonify({'price-prediction': price_prediction})
+
+    class InsertSellData(Resource):
+        @staticmethod
+        @jwt_required()
+        def post():
+            sell_handler = SellHandler()
+            data = list(request.get_json(force=True).values())
+            return sell_handler.insert_sell_ml(data)
+
     # Connect between path-->class
-    routes = {'/predict-price': PredGet}
+    routes = {'/predict-price': PredGet,
+              '/sell-data': InsertSellData}

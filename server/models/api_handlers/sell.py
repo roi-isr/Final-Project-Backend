@@ -1,9 +1,10 @@
 from server.database.queries.sell import *
 from server.database.queries.stock import *
+from server.database.queries.ML_sells import *
 from server.database.database import *
 from .basic_handler import ApiHandler
 from typing import List
-
+from server.ML.ML_main import build_ml_sells_models
 
 class SellHandler(ApiHandler):
     def __init__(self):
@@ -14,7 +15,8 @@ class SellHandler(ApiHandler):
 
         self.customer_named_values = ["buying_customer", "customer_phone", "customer_mail"]
 
-    def __update_stock(self, package_list, prev_weight=None):
+    @staticmethod
+    def __update_stock(package_list, prev_weight=None):
         db = Database()
         code = package_list[0]
         weight_to_reduce = float(package_list[2]) if prev_weight is None else float(package_list[2]) - prev_weight
@@ -60,5 +62,15 @@ class SellHandler(ApiHandler):
         return self._response
 
     def fetch_customer(self, sell_id: str):
-        super()._fetch_data(GET_CUSTOMER, sell_id, self.customer_named_values)
+        super()._create_table(CREATE_SELL_QUERY)
+        super()._fetch_data(GET_CUSTOMER_QUERY, sell_id, self.customer_named_values)
+        return self._response
+
+    def insert_sell_ml(self, sell_list: List[str]):
+        super()._create_table(CREATE_SELL_DATA_QUERY)
+        super()._insert(INSERT_SELL_DATA_QUERY, sell_list)
+        try:
+            build_ml_sells_models()
+        except:
+            pass
         return self._response

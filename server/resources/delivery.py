@@ -15,7 +15,6 @@ class DeliveryRouter:
     # Defines the Update of contact-us information API endpoint
     class DeliveryPost(Resource):
         @staticmethod
-        # @cross_origin(headers=['Content-Type', 'Authorization'])
         @jwt_required()
         def post():
             delivery_handler = DeliveryHandler()
