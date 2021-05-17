@@ -15,7 +15,7 @@ def build_and_test_regression_models():
     sells_dataset = read_data()
     print(sells_dataset)
     regressor = RegressionCustom(dataset=sells_dataset)
-    regressor.pre_processing(labeled_indexes=[2])
+    regressor.pre_processing(labeled_indexes=[1, 2])
     regressor.run_algorithms()
     # Return the model itself
     return regressor.max_accuracy_model[0], regressor.scaler_X, regressor.scaler_y, regressor.max_accuracy_model[1]
@@ -24,9 +24,10 @@ def build_and_test_regression_models():
 # Make some predictions (up to the user) over the best selected model
 def make_predictions(best_regression_model, scalers, user_features):
     # Making a prediction out of the best chosen model
-    predicted_result = RegressionCustom.predict_result(best_regression_model, *scalers, [user_features])
+    predicted_result = RegressionCustom.predict_result(best_regression_model, *scalers, [[user_features[i]
+                                                                                          for i in [0, 2, 3]]])
     return predicted_result
 
 
-a = read_data()
-print(a)
+# a = read_data()
+# print(a)

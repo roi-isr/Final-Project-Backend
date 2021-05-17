@@ -97,10 +97,11 @@ class RegressionCustom:
             for data_index in categorical_data_indexes:
                 self.X_train[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_train[:, data_index]])
                 self.X_test[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_test[:, data_index]])
-        elif len(categorical_data_indexes) == 1:
-            data_index = categorical_data_indexes[0]
-            self.X_train[:, data_index] = np.array([labels[data_index][i] for i in self.X_train[:, data_index]])
-            self.X_test[:, data_index] = np.array([labels[data_index][i] for i in self.X_test[:, data_index]])
+        # for sells predictions
+        elif len(categorical_data_indexes) == 2:
+            for data_index in categorical_data_indexes:
+                self.X_train[:, data_index] = np.array([labels[data_index][i] for i in self.X_train[:, data_index]])
+                self.X_test[:, data_index] = np.array([labels[data_index][i] for i in self.X_test[:, data_index]])
 
     # Preprocessing the data before building the model, includes - splitting the data
     # into train and test sets, normalizing and encoding categorical data.

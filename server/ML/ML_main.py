@@ -87,4 +87,4 @@ def exec_predictions(data_list):
     # except:
     #     print("\nInvalid data entered. Please enter data again.")
 
-build_ml_sells_models()
+# build_ml_sells_models()

@@ -11,18 +11,17 @@ CREATE_SELL_DATA_QUERY = """CREATE TABLE IF NOT EXISTS sells_data
                              weight_in_carat REAL NOT NULL,
                              sell_price REAL NOT NULL,
                              clarity varchar(50),
-                             color varchar(50),
-                             number_of_requests INTEGER)"""
+                             color varchar(50))"""
 
 INSERT_SELLS_MODEL_QUERY = """INSERT INTO ml_sells
                             VALUES (DEFAULT, %s, %s, %s)
                             RETURNING create_at"""
 
 INSERT_SELL_DATA_QUERY = """INSERT INTO sells_data
-                            VALUES (DEFAULT, %s, %s, %s, %s, %s)
+                            VALUES (DEFAULT, %s, %s, %s, %s)
                             RETURNING _id"""
 
-GET_SELLS_DATA_QUERY = """SELECT weight_in_carat, clarity, color, number_of_requests, sell_price
+GET_SELLS_DATA_QUERY = """SELECT weight_in_carat, color, clarity, sell_price
                           FROM sells_data"""
 
 GET_SELLS_COUNT_QUERY = """SELECT count(*)
