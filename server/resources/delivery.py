@@ -36,10 +36,18 @@ class DeliveryRouter:
             delivery_handler = DeliveryHandler()
             return delivery_handler.delete_item(_id)
 
+    class DeliveryMoveToStock(Resource):
+        @staticmethod
+        @jwt_required()
+        def put(_id):
+            delivery_handler = DeliveryHandler()
+            return delivery_handler.move_to_stock(_id)
+
     # Connect between path-->class
     routes = {'/deliveries': DeliveryGetAll,
               '/delivery': DeliveryPost,
-              '/delivery/<string:_id>': DeliveryDeleteUpdate}
+              '/delivery/<string:_id>': DeliveryDeleteUpdate,
+              '/delivery/move-to-stock/<string:_id>': DeliveryMoveToStock}
 
 
 """

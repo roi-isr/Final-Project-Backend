@@ -27,6 +27,10 @@ class DeliveryHandler(ApiHandler):
         super()._update_item(fixed_query, package_id, new_package_list)
         return self._response
 
+    def move_to_stock(self, package_id: str):
+        super()._update_item(MOVE_TO_HISTORY_QUERY, package_id, None)
+        return self._response
+
     def delete_item(self, delivery_code):
         super()._delete_item(DELETE_DELIVERY_ITEM, delivery_code)
         return self._response

@@ -25,6 +25,3 @@ def make_predictions(best_regression_model, scalers, user_features):
     # Making a prediction out of the best chosen model
     predicted_result = RegressionCustom.predict_result(best_regression_model, *scalers, [user_features])
     return predicted_result
-
-a = read_data()
-print(a)

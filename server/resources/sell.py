@@ -12,6 +12,13 @@ class SellRouter:
             sell_handler = SellHandler()
             return sell_handler.fetch_all_data()
 
+    class GetCustomer(Resource):
+        @staticmethod
+        @jwt_required()
+        def get(_id):
+            sell_handler = SellHandler()
+            return sell_handler.fetch_customer(_id)
+
     # Defines the Update of contact-us information API endpoint
     class SellPost(Resource):
         @staticmethod
@@ -38,4 +45,5 @@ class SellRouter:
     # Connect between path-->class
     routes = {'/sells': SellGetAll,
               '/sell': SellPost,
-              '/sell/<string:_id>': SellDeleteUpdate}
+              '/sell/<string:_id>': SellDeleteUpdate,
+              '/customer/<string:_id>': GetCustomer}

@@ -9,20 +9,33 @@ class SellHandler(ApiHandler):
     def __init__(self):
         super().__init__()
         self.named_values = ["sell_id", "package_code", "package_model",
-                             "weight_in_carat", "price_per_carat", "buying_entity",
+                             "weight_in_carat", "price_per_carat", "buying_customer",
                              "sell_date", "payment_method"]
+
+        self.customer_named_values = ["buying_customer", "customer_phone", "customer_mail"]
+
+    def __update_stock(self, package_list, prev_weight=None):
+        db = Database()
+        code = package_list[0]
+        weight_to_reduce = float(package_list[2]) if prev_weight is None else float(package_list[2]) - prev_weight
+        try:
+            stock_balance = float(db.fetch_specific_data(SELECT_STORE_STOCK, (code,))[0][0])
+            weight_diff = stock_balance - weight_to_reduce
+        except IndexError:
+            stock_balance = None
+        if stock_balance is not None:
+            if weight_diff > 0:
+                print(weight_to_reduce)
+                db.update_item(UPDATE_STORE_STOCK, weight_to_reduce, code)
+            else:
+                stock_id = db.fetch_specific_data(GET_STOCK_ID_QUERY, (code,))[0][0]
+                db.delete_item(DELETE_RELATED_OFFERS_QUERY, (stock_id,))
+                db.delete_item(DELETE_STOCK_ITEM, (stock_id,))
 
     def insert(self, package_list: List[str]):
         super()._create_table(CREATE_SELL_QUERY)
         super()._insert(INSERT_SELL_QUERY, package_list)
-        db = Database()
-        code = package_list[0]
-        weight_to_reduce = float(package_list[2])
-        print(code)
-        stock_balance = float(db.fetch_specific_data(SELECT_STORE_STOCK, (code,))[0])
-        if stock_balance is not None and stock_balance - weight_to_reduce:
-            print(stock_balance - weight_to_reduce)
-            db.update_item(UPDATE_STORE_STOCK, weight_to_reduce, code)
+        self.__update_stock(package_list)
         return self._response
 
     def fetch_all_data(self):
@@ -32,11 +45,20 @@ class SellHandler(ApiHandler):
 
     def update_item(self, package_id: str, new_package_list: List[str]):
         # Exclude IDs
+        db = Database()
+        code = package_id
+        prev_weight = float(db.fetch_specific_data(GET_PREV_WEIGHT_QUERY, (code,))[0][0])
         keys_str = ', '.join(self.named_values[1:])
         fixed_query = UPDATE_SELL_ITEM_QUERY.format(keys_str)
         super()._update_item(fixed_query, package_id, new_package_list)
+        print(f'prev: {prev_weight}')
+        self.__update_stock(new_package_list, prev_weight)
         return self._response
 
-    def delete_item(self, package_id: str):
-        super()._delete_item(DELETE_SELL_ITEM, package_id)
+    def delete_item(self, sell_id: str):
+        super()._delete_item(DELETE_SELL_ITEM, sell_id)
+        return self._response
+
+    def fetch_customer(self, sell_id: str):
+        super()._fetch_data(GET_CUSTOMER, sell_id, self.customer_named_values)
         return self._response

@@ -25,6 +25,7 @@ class Database:
     def insert_data(self, query: str, data: Tuple):
         with self.connection as conn:
             cur = conn.cursor()
+            print(data)
             cur.execute(query, data)
         return cur.fetchone()[0]
 
@@ -42,10 +43,13 @@ class Database:
             cur.execute(query, data)
         return cur.fetchall()
 
-    def update_item(self, query: str, data: Tuple[str], _id: str):
+    def update_item(self, query: str, data: Tuple[str] or None, _id: str):
         with self.connection as conn:
             cur = conn.cursor()
-            cur.execute(query, (data, _id))
+            if data is not None:
+                cur.execute(query, (data, _id))
+            else:
+                cur.execute(query, (_id,))
         return cur.fetchone()[0]
 
     def delete_item(self, query: str, item_id: Tuple[str]):
