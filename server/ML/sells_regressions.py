@@ -25,7 +25,8 @@ def build_and_test_regression_models():
 def make_predictions(best_regression_model, scalers, user_features):
     # Making a prediction out of the best chosen model
     predicted_result = RegressionCustom.predict_result(best_regression_model, *scalers, [[user_features[i]
-                                                                                          for i in [0, 2, 3]]])
+                                                                                          for i in [0, 2, 3]]],
+                                                       [1, 2])
     return predicted_result
 
 

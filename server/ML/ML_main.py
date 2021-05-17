@@ -51,6 +51,9 @@ def calc_sells_result_influence(data_list, num_of_sells_items, predicted_price):
     best_sells_regression_model, scalers_sells, accuracy = ModelStorage.get_sells_model_from_db()
     print(F'---------COUNTER: {ModelStorage.count_sell_items()}, PRED: {accuracy}---------------')
     predicted_sells_price = make_sells_predictions(best_sells_regression_model, scalers_sells, data_list)
+    print(f'sells_pred {predicted_sells_price}')
+
+    print(f'acc: {accuracy}')
     if accuracy > 0:
         experience_rank = (math.atan(0.05 * num_of_sells_items) / math.pi) * 2
         admin_expertise = accuracy * experience_rank
@@ -72,19 +75,23 @@ def exec_predictions(data_list):
         advise_pred, advise_exp = calc_advise_result_influence(data_list, num_of_advice_items, predicted_price)
     else:
         advise_pred = predicted_price
-        advise_exp = 0.5
+        advise_exp = 0
 
     if num_of_sells_items > 7:
         sells_pred, sells_exp = calc_sells_result_influence(data_list, num_of_sells_items, predicted_price)
     else:
         sells_pred = predicted_price
-        sells_exp = 0.5
+        sells_exp = 0
 
-    # Calculate the weighted average between the two models
-    final_pred = (advise_pred * advise_exp + sells_pred * sells_exp) / (advise_exp + sells_exp)
-
+    if advise_exp == 0 and sells_exp == 0:
+        final_pred = predicted_price
+    else:
+        # Calculate the weighted average between the two models
+        final_pred = (advise_pred * advise_exp + sells_pred * sells_exp) / (advise_exp + sells_exp)
+    print(f'pred {predicted_price}')
     return "{:,.1f}$".format(final_pred)
     # except:
     #     print("\nInvalid data entered. Please enter data again.")
 
 # build_ml_sells_models()
+# build_ml_advise_models()

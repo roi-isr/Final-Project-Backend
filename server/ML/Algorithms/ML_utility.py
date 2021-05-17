@@ -177,18 +177,23 @@ class RegressionCustom:
             avg_accuracy = (test_accuracy + cv_accuracy) / 2
         else:
             avg_accuracy = test_accuracy
-        print("The accuracy score of the polynomial with random forest is: {:.4f}%".format(avg_accuracy * 100))
+        print("The accuracy score of the regression with random forest is: {:.4f}%".format(avg_accuracy * 100))
         return random_forest_regressor, avg_accuracy, "Random Forest Regression"
 
     @staticmethod
     # Get a sample data from the user (as an input), and predict the price of the diamond
-    def predict_result(regression_model, scaler_X_arg, scaler_y_arg, data):
+    def predict_result(regression_model, scaler_X_arg, scaler_y_arg, data, categorical_data_indexes=[1, 2, 3]):
         new_data = np.array(data.copy())
         # Encoding input data
-        categorical_data_indexes = [1, 2, 3]
+
         for data_index in categorical_data_indexes:
             curr_categorical_train_data = new_data[:, data_index]
-            new_data[:, data_index] = labels[data_index-1][new_data[:, data_index][0]]
+            if len(categorical_data_indexes) == 3:
+                new_data[:, data_index] = labels[data_index-1][new_data[:, data_index][0]]
+            # In case of sell predicitons
+            elif len(categorical_data_indexes) == 2:
+                new_data[:, data_index] = labels[data_index][new_data[:, data_index][0]]
+
         # Normalizing input data
         normalized_data = scaler_X_arg.transform(new_data)
         predicted_price = scaler_y_arg.inverse_transform(regression_model.predict(normalized_data))
