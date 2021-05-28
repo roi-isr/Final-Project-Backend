@@ -1,6 +1,7 @@
 from server.database.queries.sell import *
 from server.database.queries.stock import *
 from server.database.queries.ML_sells import *
+from server.database.queries.admin_price_advice import *
 from server.database.database import *
 from .basic_handler import ApiHandler
 from typing import List
@@ -73,4 +74,10 @@ class SellHandler(ApiHandler):
             build_ml_sells_models()
         except:
             pass
+        return self._response
+
+    # Reset models from DB
+    def reset_models(self):
+        super()._drop_table(RESET_ADVISE_MODEL_QUERY)
+        super()._drop_table(RESET_SELLS_MODEL_QUERY)
         return self._response

@@ -32,6 +32,14 @@ class PredRouter:
             data = list(request.get_json(force=True).values())
             return sell_handler.insert_sell_ml(data)
 
+    class ResetModels(Resource):
+        @staticmethod
+        @jwt_required()
+        def delete():
+            sell_handler = SellHandler()
+            return sell_handler.reset_models()
+
     # Connect between path-->class
     routes = {'/predict-price': PredGet,
-              '/sell-data': InsertSellData}
+              '/sell-data': InsertSellData,
+              '/reset-models': ResetModels}

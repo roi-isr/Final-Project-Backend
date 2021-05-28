@@ -17,3 +17,5 @@ GET_ADVISE_ALL_QUERY = """SELECT weight, cut, color, clarity, depth, table1, adv
 
 GET_ITEMS_COUNTER_QUERY = """SELECT count(*)
                              FROM admin_advise"""
+
+RESET_ADVISE_MODEL_QUERY = """TRUNCATE TABLE admin_advise"""

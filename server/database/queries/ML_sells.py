@@ -21,6 +21,8 @@ INSERT_SELL_DATA_QUERY = """INSERT INTO sells_data
                             VALUES (DEFAULT, %s, %s, %s, %s)
                             RETURNING _id"""
 
+RESET_SELLS_MODEL_QUERY = """TRUNCATE TABLE sells_data"""
+
 GET_SELLS_DATA_QUERY = """SELECT weight_in_carat, color, clarity, sell_price
                           FROM sells_data"""
 
