@@ -25,7 +25,7 @@ GET_PREV_WEIGHT_QUERY = """SELECT weight_in_carat
                            FROM sell
                            WHERE sell_id=%s"""
 
-GET_CUSTOMER_QUERY = """SELECT buying_customer, customer_phone, customer_mail
+GET_CUSTOMER_QUERY = """SELECT buying_customer, customer_mail, customer_phone
                         FROM sell
                         WHERE sell_id=%s"""
 
