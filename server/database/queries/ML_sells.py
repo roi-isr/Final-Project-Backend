@@ -37,4 +37,4 @@ INSERT_SELLS_MODEL_QUERY = """INSERT INTO ml_sells
                                VALUES (DEFAULT, %s, %s, %s, %s)
                                RETURNING create_at"""
 
-DELETE_ALL_SELLS_MODELS_QUERY = """TRUNCATE TABLE ml_sells"""
+DELETE_ALL_SELLS_MODELS_QUERY = """TRUNCATE TABLE sells_data"""
