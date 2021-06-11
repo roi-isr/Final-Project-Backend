@@ -17,10 +17,10 @@ def build_and_test_regression_models():
     diamond_dataset = read_data()
     regressor = RegressionCustom(dataset=diamond_dataset)
     regressor.pre_processing()
-    features_ranks = regressor.k_best_features_exec(diamond_dataset.columns, 6)
+    # features_ranks = regressor.k_best_features_exec(diamond_dataset.columns, 6)
     regressor.run_algorithms()
     # Return the model itself
-    return regressor.max_accuracy_model[0], features_ranks, regressor.scaler_X, regressor.scaler_y
+    return regressor.max_accuracy_model[0], regressor.scaler_X, regressor.scaler_y
 
 
 # Make some predictions (up to the user) over the best selected model

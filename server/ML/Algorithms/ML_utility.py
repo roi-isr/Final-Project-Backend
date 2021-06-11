@@ -168,10 +168,10 @@ class RegressionCustom:
     # Run random forest regression model - combines multiple trees based on sub-features and sub-samples, then takes the
     # average of all
     def run_random_forest_regression(self):
-        model_grid_params = {'n_estimators': [10, 20, 50, 100]}
         # Parameters of the model - the number of trees to build (estimators)
-        random_forest_regressor = GridSearchCV(estimator=RandomForestRegressor(random_state=42),
-                                               param_grid=model_grid_params, verbose=3)
+        # model_grid_params = {'n_estimators': [10, 20, 50]}
+        random_forest_regressor = RandomForestRegressor(random_state=42, n_estimators=50)
+        # grid_search_random_forest_reg = GridSearchCV(estimator=random_forest_regressor, param_grid=model_grid_params)
         # Train the best parameter's model (found by grid search algorithm) on the train set
         random_forest_regressor.fit(self.X_train, self.y_train)
         y_pred = self.scaler_y.inverse_transform(random_forest_regressor.predict(self.X_test))

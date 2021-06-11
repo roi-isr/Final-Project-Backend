@@ -16,7 +16,7 @@ import math
 
 def build_ml_models():
     # Building and testing the regression models over the diamonds dataset
-    best_regression_model, features_ranks, scaler_X, scaler_y = build_diamond_regression()
+    best_regression_model, scaler_X, scaler_y = build_diamond_regression()
     ModelStorage.store_main_model_in_db(best_regression_model, scaler_X, scaler_y)
 
 
@@ -40,11 +40,11 @@ def calc_advise_result_influence(data_list, num_of_advice_items, predicted_price
     predicted_advise_price = make_advise_predictions(best_advise_regression_model, scalers_advise, data_list)
     if accuracy > 0:
         experience_rank = (math.atan(0.05 * num_of_advice_items) / math.pi) * 2
-        admin_expertise = accuracy * experience_rank
+        advise_expertise = accuracy * experience_rank
     else:
-        admin_expertise = 0
-    advise_pred = (admin_expertise * predicted_advise_price) + ((1 - admin_expertise) * predicted_price)
-    return advise_pred, admin_expertise
+        advise_expertise = 0
+    advise_pred = (advise_expertise * predicted_advise_price) + ((1 - advise_expertise) * predicted_price)
+    return advise_pred, advise_expertise
 
 
 def calc_sells_result_influence(data_list, num_of_sells_items, predicted_price):
@@ -56,11 +56,11 @@ def calc_sells_result_influence(data_list, num_of_sells_items, predicted_price):
     print(f'acc: {accuracy}')
     if accuracy > 0:
         experience_rank = (math.atan(0.05 * num_of_sells_items) / math.pi) * 2
-        admin_expertise = accuracy * experience_rank
+        sells_expertise = accuracy * experience_rank
     else:
-        admin_expertise = 0
-    sells_pred = (admin_expertise * predicted_sells_price) + ((1 - admin_expertise) * predicted_price)
-    return sells_pred, admin_expertise
+        sells_expertise = 0
+    sells_pred = (sells_expertise * predicted_sells_price) + ((1 - sells_expertise) * predicted_price)
+    return sells_pred, sells_expertise
 
 
 def exec_predictions(data_list):
@@ -94,3 +94,4 @@ def exec_predictions(data_list):
 
 # build_ml_sells_models()
 # build_ml_advise_models()
+# build_ml_models()
