@@ -90,8 +90,7 @@ def exec_predictions(data_list):
         final_pred = (advise_pred * advise_exp + sells_pred * sells_exp) / (advise_exp + sells_exp)
     print(f'pred {predicted_price}')
     return "{:,.1f}$".format(final_pred)
-    # except:
-    #     print("\nInvalid data entered. Please enter data again.")
 
-build_ml_sells_models()
-build_ml_advise_models()
+
+# build_ml_sells_models()
+# build_ml_advise_models()

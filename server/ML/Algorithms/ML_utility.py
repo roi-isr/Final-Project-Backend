@@ -4,7 +4,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV
 from sklearn.feature_selection import SelectKBest
 
 labels = [{
@@ -138,7 +138,8 @@ class RegressionCustom:
         linear_regressor.fit(self.X_train, self.y_train)
         y_pred = self.scaler_y.inverse_transform(linear_regressor.predict(self.X_test))
         test_accuracy = self.calc_test_accuracy(y_test=self.scaler_y.inverse_transform(self.y_test), y_pred=y_pred)
-        if len(self.X_train) > 20:
+        # Apply k-fold Cross Validation for small amount of data
+        if 20 < len(self.X_train) < 500:
             cv_accuracy = self.apply_cross_validation(linear_regressor, cv=10)
             avg_accuracy = (test_accuracy + cv_accuracy) / 2
         else:
@@ -155,7 +156,8 @@ class RegressionCustom:
         # Predict the results on the test set
         y_pred = self.scaler_y.inverse_transform(decision_tree_regressor.predict(self.X_test))
         test_accuracy = self.calc_test_accuracy(y_test=self.scaler_y.inverse_transform(self.y_test), y_pred=y_pred)
-        if len(self.X_train) > 20:
+        # Apply k-fold Cross Validation for small amount of data
+        if 20 < len(self.X_train) < 500:
             cv_accuracy = self.apply_cross_validation(decision_tree_regressor, cv=10)
             avg_accuracy = (test_accuracy + cv_accuracy) / 2
         else:
@@ -166,13 +168,16 @@ class RegressionCustom:
     # Run random forest regression model - combines multiple trees based on sub-features and sub-samples, then takes the
     # average of all
     def run_random_forest_regression(self):
+        model_grid_params = {'n_estimators': [10, 20, 50, 100]}
         # Parameters of the model - the number of trees to build (estimators)
-        random_forest_regressor = RandomForestRegressor(random_state=42, n_estimators=20)
+        random_forest_regressor = GridSearchCV(estimator=RandomForestRegressor(random_state=42),
+                                               param_grid=model_grid_params, verbose=3)
         # Train the best parameter's model (found by grid search algorithm) on the train set
         random_forest_regressor.fit(self.X_train, self.y_train)
         y_pred = self.scaler_y.inverse_transform(random_forest_regressor.predict(self.X_test))
         test_accuracy = self.calc_test_accuracy(y_test=self.scaler_y.inverse_transform(self.y_test), y_pred=y_pred)
-        if len(self.X_train) > 20:
+        # Apply k-fold Cross Validation for small amount of data
+        if 20 < len(self.X_train) < 500:
             cv_accuracy = self.apply_cross_validation(random_forest_regressor, cv=5)
             avg_accuracy = (test_accuracy + cv_accuracy) / 2
         else:
@@ -184,10 +189,9 @@ class RegressionCustom:
     # Get a sample data from the user (as an input), and predict the price of the diamond
     def predict_result(regression_model, scaler_X_arg, scaler_y_arg, data, categorical_data_indexes=[1, 2, 3]):
         new_data = np.array(data.copy())
-        # Encoding input data
 
+        # Encoding input data
         for data_index in categorical_data_indexes:
-            curr_categorical_train_data = new_data[:, data_index]
             if len(categorical_data_indexes) == 3:
                 new_data[:, data_index] = labels[data_index-1][new_data[:, data_index][0]]
             # In case of sell predicitons
@@ -197,5 +201,5 @@ class RegressionCustom:
         # Normalizing input data
         normalized_data = scaler_X_arg.transform(new_data)
         predicted_price = scaler_y_arg.inverse_transform(regression_model.predict(normalized_data))
-        # Return formatted price with separated commas and a dollar sign ('$')
+        # Return the predicted price
         return int(predicted_price[0])

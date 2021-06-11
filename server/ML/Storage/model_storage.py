@@ -1,3 +1,6 @@
+""" This module handles the saving and retrieval of the various models for DB
+and converting into and from pickle files """
+
 import pickle
 from server.database.database import Database
 from server.database.queries.ML_models import *
@@ -20,6 +23,8 @@ class ModelStorage:
     @staticmethod
     def __get_unpickled(single_bytes):
         return pickle.loads(single_bytes)
+
+    # Store the models in DB as pickle files
 
     @staticmethod
     def store_main_model_in_db(model, scaler_X, scaler_y):
@@ -47,6 +52,8 @@ class ModelStorage:
         pickled_tuple = ModelStorage.__get_tuple_pickled((model, scaler_X, scaler_y))
         database.insert_data(INSERT_SELLS_MODEL_QUERY, (*pickled_tuple, accuracy))
         database.close_connection()
+
+    # Retrieve models from DB as pickles, and convert to proper objects
 
     @staticmethod
     def get_main_model_from_db():

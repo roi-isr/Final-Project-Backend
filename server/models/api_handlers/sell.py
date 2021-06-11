@@ -7,6 +7,7 @@ from .basic_handler import ApiHandler
 from typing import List
 from server.ML.ML_main import build_ml_sells_models
 
+
 class SellHandler(ApiHandler):
     def __init__(self):
         super().__init__()
@@ -14,7 +15,7 @@ class SellHandler(ApiHandler):
                              "weight_in_carat", "price_per_carat", "buying_customer",
                              "sell_date", "payment_method"]
 
-        self.customer_named_values = ["buying_customer", "customer_phone", "customer_mail"]
+        self.customer_named_values = ["buying_customer", "customer_mail", "customer_phone"]
 
     @staticmethod
     def __update_stock(package_list, prev_weight=None):
