@@ -1,3 +1,5 @@
+import hashlib
+
 from flask import request, jsonify
 from werkzeug.security import safe_str_cmp
 from flask_restful import Resource
@@ -10,18 +12,26 @@ from server.models.api_handlers.admin import AdminHandler
 from ..models.entities.admin import Admin
 
 
+# hash the password
+def hash_pwd(password: str):
+    hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+    return hashed_password
+
 class AdminRouter:
     class AdminLogIn(Resource):
+
         @staticmethod
         def post():
             # Get login data (username and password)
             data = request.get_json(force=True)
 
+            hashed_pwd = hash_pwd(str(data['password']))
+
             # find admin in database
             admin = Admin.find_by_username(data['username'])
 
             # Check is admin exist in DB and password is valid - AUTHENTICATION PROCESS
-            if admin and safe_str_cmp(data['password'], admin.password):
+            if admin and safe_str_cmp(hashed_pwd, admin.password):
                 # Generate access and refresh tokens, given admin ID
                 access_token = create_access_token(identity=admin.id, fresh=True)
                 refresh_token = create_refresh_token(identity=admin.id)
@@ -59,13 +69,6 @@ class AdminRouter:
             admin_handler = AdminHandler()
             data = list(request.get_json(force=True).values())
             return admin_handler.insert(data)
-
-    # class DelAdmin(Resource):
-    #     @staticmethod
-    #     @jwt_required()
-    #     def delete():
-    #         data = request.get_json(force=True)
-    #         return admin.delete()
 
     # Defines Adding an Admin API endpoint
     class DelAdminTable(Resource):

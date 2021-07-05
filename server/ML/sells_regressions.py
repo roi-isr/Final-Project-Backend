@@ -1,6 +1,7 @@
-from server.ML.Algorithms.ML_utility import *
 import pandas as pd
 from sqlalchemy import create_engine
+
+from server.ML.Algorithms.ML_utility import *
 from server.database.queries.ML_sells import GET_SELLS_DATA_QUERY
 from server.config.connection_config import DATABASE_URL
 

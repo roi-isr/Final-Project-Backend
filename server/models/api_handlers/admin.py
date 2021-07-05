@@ -1,15 +1,25 @@
 from server.database.queries.admin import *
-from flask import jsonify
 from .basic_handler import ApiHandler
+from flask import jsonify
+import hashlib
 
 
 class AdminHandler(ApiHandler):
     def __init__(self):
         super().__init__()
 
+    # hash the password
+    @staticmethod
+    def _hash_pwd(password: str):
+        hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+        return hashed_password
+
     def insert(self, admin_list: list):
+        username = admin_list[0]
+        secured_password = self._hash_pwd(admin_list[1])
+
         super()._create_table(CREATE_TABLE_QUERY)
-        super()._insert(INSERT_ADMIN_QUERY, admin_list)
+        super()._insert(INSERT_ADMIN_QUERY, [username, secured_password])
         return self._response
 
     def delete(self, _id):
