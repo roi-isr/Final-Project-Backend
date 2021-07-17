@@ -5,7 +5,6 @@ CREATE_SELLS_MODEL_QUERY = """CREATE TABLE IF NOT EXISTS ml_sells
                                scaler_y bytea NOT NULL,
                                accuracy real NOT NULL)"""
 
-
 CREATE_SELL_DATA_QUERY = """CREATE TABLE IF NOT EXISTS sells_data
                             (_id SERIAL PRIMARY KEY,
                              weight_in_carat REAL NOT NULL,

@@ -1,4 +1,3 @@
-
 CREATE_DELIVERY_QUERY = """CREATE TABLE IF NOT EXISTS delivery
                            (delivery_id SERIAL PRIMARY KEY,
                             package_code varchar(255) NOT NULL,
@@ -8,9 +7,6 @@ CREATE_DELIVERY_QUERY = """CREATE TABLE IF NOT EXISTS delivery
                             sender varchar(255),
                             send_date DATE,
                             history BOOLEAN)"""
-
-#REFERENCES diamond_package(package_code)
-# , diamond_package.seller
 
 INSERT_DELIVERY_QUERY = """INSERT INTO delivery 
                            VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, FALSE)

@@ -1,4 +1,3 @@
-
 CREATE_MODEL_QUERY = """CREATE TABLE IF NOT EXISTS ml_models
                         (create_at TIMESTAMP DEFAULT (now() at time zone 'utc-2') PRIMARY KEY,
                          model bytea NOT NULL,

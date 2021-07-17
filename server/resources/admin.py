@@ -1,12 +1,12 @@
 import hashlib
 
 from flask import request, jsonify
-from werkzeug.security import safe_str_cmp
-from flask_restful import Resource
 from flask_jwt_extended import (create_access_token,
                                 create_refresh_token,
                                 jwt_required,
                                 get_jwt_identity)
+from flask_restful import Resource
+from werkzeug.security import safe_str_cmp
 
 from server.models.api_handlers.admin import AdminHandler
 from ..models.entities.admin import Admin
@@ -16,6 +16,7 @@ from ..models.entities.admin import Admin
 def hash_pwd(password: str):
     hashed_password = hashlib.sha256(password.encode('utf-8')).hexdigest()
     return hashed_password
+
 
 class AdminRouter:
     class AdminLogIn(Resource):

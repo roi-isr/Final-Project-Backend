@@ -1,11 +1,12 @@
-from server.database.queries.sell import *
-from server.database.queries.stock import *
+from typing import List
+
+from server.ML.ML_main import build_ml_sells_models
+from server.database.database import *
 from server.database.queries.ML_sells import *
 from server.database.queries.admin_price_advice import *
-from server.database.database import *
+from server.database.queries.sell import *
+from server.database.queries.stock import *
 from .basic_handler import ApiHandler
-from typing import List
-from server.ML.ML_main import build_ml_sells_models
 
 
 class SellHandler(ApiHandler):

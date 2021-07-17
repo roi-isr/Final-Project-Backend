@@ -1,7 +1,9 @@
 from typing import List, Tuple
-from flask import jsonify
-from server.database.database import Database
+
 import psycopg2
+from flask import jsonify
+
+from server.database.database import Database
 
 
 class ApiHandler:
@@ -58,19 +60,19 @@ class ApiHandler:
 
     def _insert(self, query: str, data: List[str]):
         tuple_data = tuple(data)
-        # try:
-        database = Database()
-        _id = database.insert_data(query, tuple_data)
-        self._response = self._build_response(data=jsonify({"message": "Successful POST request", "_id": _id}),
-                                              status_code=201)
-        # except psycopg2.errors.UniqueViolation:
-        #     self._response = self._build_response(data=jsonify({"message": "Item already exists"}),
-        #                                           status_code=400)
-        # except:
-        #     self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
-        #                                           status_code=500)
-        # finally:
-        #     database.close_connection()
+        try:
+            database = Database()
+            _id = database.insert_data(query, tuple_data)
+            self._response = self._build_response(data=jsonify({"message": "Successful POST request", "_id": _id}),
+                                                  status_code=201)
+        except psycopg2.errors.UniqueViolation:
+            self._response = self._build_response(data=jsonify({"message": "Item already exists"}),
+                                                  status_code=400)
+        except:
+            self._response = self._build_response(data=jsonify({"message": "Internal server error"}),
+                                                  status_code=500)
+        finally:
+            database.close_connection()
 
     def _update_item(self, query: str, _id: str, data: List[str] or str or None):
         if isinstance(data, list):

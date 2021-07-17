@@ -1,4 +1,3 @@
-
 CREATE_STOCK_QUERY = """CREATE TABLE IF NOT EXISTS stock
                         (stock_id SERIAL PRIMARY KEY,
                          package_model varchar(50) NOT NULL,
@@ -69,4 +68,3 @@ GET_STOCK_ID_QUERY = """SELECT stock_id
 
 DELETE_RELATED_OFFERS_QUERY = """DELETE FROM offer
                                  WHERE package_id=%s"""
-

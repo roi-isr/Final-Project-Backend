@@ -1,5 +1,8 @@
 # THIS PROGRAM MAY DONE EXECUTING IN UP TO 30 MINUTE (MAKING SOME HEAVY CALCULATIONS)
 
+import math
+
+from server.ML.Storage.model_storage import ModelStorage
 # Importing the diamond_regression '.py' file
 from server.ML.diamond_regressions import \
     build_and_test_regression_models as build_diamond_regression, \
@@ -10,8 +13,6 @@ from server.ML.price_advise_regressions import \
 from server.ML.sells_regressions import \
     build_and_test_regression_models as build_sells_regression, \
     make_predictions as make_sells_predictions
-from server.ML.Storage.model_storage import ModelStorage
-import math
 
 
 def build_ml_models():
@@ -90,7 +91,6 @@ def exec_predictions(data_list):
         final_pred = (advise_pred * advise_exp + sells_pred * sells_exp) / (advise_exp + sells_exp)
     print(f'pred {predicted_price}')
     return "{:,.1f}$".format(final_pred)
-
 
 # build_ml_sells_models()
 # build_ml_advise_models()

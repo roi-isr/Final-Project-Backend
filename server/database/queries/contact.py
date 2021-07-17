@@ -1,4 +1,3 @@
-
 CREATE_TABLE_QUERY = """CREATE TABLE IF NOT EXISTS contact
                         (id SERIAL PRIMARY KEY, 
                          email_address varchar(255) NOT NULL,

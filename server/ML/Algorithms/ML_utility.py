@@ -1,44 +1,46 @@
 import numpy as np
-from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LinearRegression
-from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.feature_selection import SelectKBest
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split, cross_val_score
-from sklearn.feature_selection import SelectKBest
+from sklearn.preprocessing import StandardScaler
+from sklearn.tree import DecisionTreeRegressor
 
-labels = [{
-    'Fair': 0,
-    'Ideal': 1,
-    'Good': 2,
-    'Very Good': 3,
-    'Premium': 4
-},
-{
-    'Z': 0,
-    'N': 1,
-    'K': 2,
-    'J': 3,
-    'I': 4,
-    'H': 5,
-    'G': 6,
-    'F': 7,
-    'E': 8,
-    'D': 9
-},
-{
-    'I3': 0,
-    'I2': 1,
-    'I1': 2,
-    'SI2': 3,
-    'SI1': 4,
-    'VS2': 5,
-    'VS1': 6,
-    'VVS2': 7,
-    'VVS1': 8,
-    'IF': 9,
-    'FL': 10
-}]
+labels = [
+    {
+        'Fair': 0,
+        'Ideal': 1,
+        'Good': 2,
+        'Very Good': 3,
+        'Premium': 4
+    },
+    {
+        'Z': 0,
+        'N': 1,
+        'K': 2,
+        'J': 3,
+        'I': 4,
+        'H': 5,
+        'G': 6,
+        'F': 7,
+        'E': 8,
+        'D': 9
+    },
+    {
+        'I3': 0,
+        'I2': 1,
+        'I1': 2,
+        'SI2': 3,
+        'SI1': 4,
+        'VS2': 5,
+        'VS1': 6,
+        'VVS2': 7,
+        'VVS1': 8,
+        'IF': 9,
+        'FL': 10
+    }
+]
 
 
 class RegressionCustom:
@@ -95,8 +97,8 @@ class RegressionCustom:
         categorical_data_indexes = labeled_indexes
         if len(categorical_data_indexes) == 3:
             for data_index in categorical_data_indexes:
-                self.X_train[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_train[:, data_index]])
-                self.X_test[:, data_index] = np.array([labels[data_index-1][i] for i in self.X_test[:, data_index]])
+                self.X_train[:, data_index] = np.array([labels[data_index - 1][i] for i in self.X_train[:, data_index]])
+                self.X_test[:, data_index] = np.array([labels[data_index - 1][i] for i in self.X_test[:, data_index]])
         # for sells predictions
         elif len(categorical_data_indexes) == 2:
             for data_index in categorical_data_indexes:
@@ -122,7 +124,8 @@ class RegressionCustom:
         self.y_train, self.y_test = self.y_train.ravel(), self.y_test.ravel()
 
     # Calculating test accuracy
-    def calc_test_accuracy(self, y_test, y_pred):
+    @staticmethod
+    def calc_test_accuracy(y_test, y_pred):
         accuracy = r2_score(y_test, y_pred)
         return accuracy
 
@@ -193,7 +196,7 @@ class RegressionCustom:
         # Encoding input data
         for data_index in categorical_data_indexes:
             if len(categorical_data_indexes) == 3:
-                new_data[:, data_index] = labels[data_index-1][new_data[:, data_index][0]]
+                new_data[:, data_index] = labels[data_index - 1][new_data[:, data_index][0]]
             # In case of sell predicitons
             elif len(categorical_data_indexes) == 2:
                 new_data[:, data_index] = labels[data_index][new_data[:, data_index][0]]
