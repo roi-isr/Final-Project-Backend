@@ -1,6 +1,7 @@
 """ Defining an admin class, used for further authentication process """
 
 import psycopg2
+
 from server.config.connection_config import CONNECTION_INFO
 
 

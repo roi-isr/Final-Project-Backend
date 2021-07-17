@@ -1,7 +1,8 @@
 """ Defining a DB class, which implements a direct connection and action functions with the PostgreSQL DB"""
 
-from typing import List, Tuple
 import psycopg2
+from typing import List, Tuple
+
 from server.config.connection_config import CONNECTION_INFO
 
 

@@ -1,7 +1,8 @@
+from typing import List
+
+from server.ML.ML_main import build_ml_advise_models
 from server.database.queries.admin_price_advice import *
 from .basic_handler import ApiHandler
-from typing import List
-from server.ML.ML_main import build_ml_advise_models
 
 
 class AdminAdviseHandler(ApiHandler):
@@ -17,5 +18,3 @@ class AdminAdviseHandler(ApiHandler):
         except:
             pass
         return self._response
-
-

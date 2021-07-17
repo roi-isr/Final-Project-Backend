@@ -1,4 +1,3 @@
-
 CREATE_SELL_QUERY = """CREATE TABLE IF NOT EXISTS sell
                        (sell_id SERIAL PRIMARY KEY,
                         package_code varchar(50) NOT NULL,
@@ -14,7 +13,6 @@ CREATE_SELL_QUERY = """CREATE TABLE IF NOT EXISTS sell
 INSERT_SELL_QUERY = """INSERT INTO sell
                        VALUES (DEFAULT, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                        RETURNING sell_id"""
-
 
 GET_SELL_ALL_QUERY = """SELECT sell_id, package_code, package_model, weight_in_carat, price_per_carat, buying_customer,
                         sell_date, payment_method

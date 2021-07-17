@@ -1,6 +1,7 @@
+from typing import List
+
 from server.database.queries.store import *
 from .basic_handler import ApiHandler
-from typing import List
 
 
 class StoreHandler(ApiHandler):

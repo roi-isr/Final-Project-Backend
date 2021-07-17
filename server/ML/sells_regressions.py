@@ -30,6 +30,5 @@ def make_predictions(best_regression_model, scalers, user_features):
                                                        [1, 2])
     return predicted_result
 
-
 # a = read_data()
 # print(a)

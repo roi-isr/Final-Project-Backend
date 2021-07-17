@@ -1,8 +1,10 @@
+from typing import List
+
+from flask import jsonify
+
+from server.database.database import Database
 from server.database.queries.stock import *
 from .basic_handler import ApiHandler
-from typing import List
-from flask import jsonify
-from server.database.database import Database
 
 
 class StockHandler(ApiHandler):

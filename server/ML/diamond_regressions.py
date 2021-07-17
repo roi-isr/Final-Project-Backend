@@ -1,6 +1,8 @@
-from server.ML.Algorithms.ML_utility import *
-import pandas as pd
 import os
+
+import pandas as pd
+
+from server.ML.Algorithms.ML_utility import *
 
 
 # Read relevant data from 'diamonds.csv' file

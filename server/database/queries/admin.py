@@ -1,4 +1,3 @@
-
 CREATE_TABLE_QUERY = """CREATE TABLE IF NOT EXISTS admins
                            (id SERIAL PRIMARY KEY,
                             username varchar(255) UNIQUE,

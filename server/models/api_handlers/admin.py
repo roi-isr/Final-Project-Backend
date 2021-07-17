@@ -1,5 +1,10 @@
 import hashlib
 
+<<<<<<< HEAD
+=======
+from flask import jsonify
+
+>>>>>>> e83dbabce7c0587ef257f2c4a83420d405a985d1
 from server.database.queries.admin import *
 from .basic_handler import ApiHandler
 
