@@ -7,6 +7,6 @@ try:
 
     CONNECTION_INFO = CONNECTION_SECRET
     DATABASE_URL = DATABASE_URL_PATH
-except ModuleNotFoundError:
+except (ModuleNotFoundError, ImportError):
     CONNECTION_INFO = os.environ['DATABASE_URL']
     DATABASE_URL = os.environ['DATABASE_URL_FIXED']
