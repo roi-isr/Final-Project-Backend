@@ -1,4 +1,4 @@
-
+PRICE_PER_CARAT : VARCHAR()
 CREATE_SELL_QUERY = """CREATE TABLE IF NOT EXISTS sell
                        (sell_id SERIAL PRIMARY KEY,
                         package_code varchar(50) NOT NULL,
