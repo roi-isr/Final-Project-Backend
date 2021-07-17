@@ -3,13 +3,14 @@ and converting into and from pickle files """
 
 import pickle
 from typing import Tuple
+
 import psycopg2
 
 from server.database.database import Database
-from server.database.queries.ML_models import *
 from server.database.queries.ML_admin_advise import *
-from server.database.queries.admin_price_advice import *
+from server.database.queries.ML_models import *
 from server.database.queries.ML_sells import *
+from server.database.queries.admin_price_advice import *
 
 
 class ModelStorage:

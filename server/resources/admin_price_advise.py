@@ -1,7 +1,8 @@
-from flask_restful import Resource
-from server.models.api_handlers.admin_price_advise import AdminAdviseHandler
 from flask import request
 from flask_jwt_extended import jwt_required
+from flask_restful import Resource
+
+from server.models.api_handlers.admin_price_advise import AdminAdviseHandler
 
 
 class AdminAdviseRouter:

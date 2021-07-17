@@ -80,15 +80,6 @@ class RegressionCustom:
             print(f'{i}: {j}')
         return sorted(zip(column_names_list, best_attr_processor.scores_), key=lambda x: x[1], reverse=True)
 
-    # Normalizing data
-    def normalize_data(self):
-        self.scaler_X = StandardScaler()
-        self.X_train = self.scaler_X.fit_transform(self.X_train)
-        self.X_test = self.scaler_X.transform(self.X_test)
-        self.scaler_y = StandardScaler()
-        self.y_train = self.scaler_y.fit_transform(self.y_train)
-        self.y_test = self.scaler_y.transform(self.y_test)
-
     # Encoding classes (categorical data) to integers, beginning from 0 - dealing with categorical data
     def encode_data(self, labeled_indexes):
         # Marking the categorical data
@@ -103,13 +94,20 @@ class RegressionCustom:
                 self.X_train[:, data_index] = np.array([labels[data_index][i] for i in self.X_train[:, data_index]])
                 self.X_test[:, data_index] = np.array([labels[data_index][i] for i in self.X_test[:, data_index]])
 
+    # Normalizing data
+    def normalize_data(self):
+        self.scaler_X = StandardScaler()
+        self.X_train = self.scaler_X.fit_transform(self.X_train)
+        self.X_test = self.scaler_X.transform(self.X_test)
+        self.scaler_y = StandardScaler()
+        self.y_train = self.scaler_y.fit_transform(self.y_train)
+        self.y_test = self.scaler_y.transform(self.y_test)
+
     # Preprocessing the data before building the model, includes - splitting the data
     # into train and test sets, normalizing and encoding categorical data.
     def pre_processing(self, labeled_indexes=[1, 2, 3]):
         X = self.dataset.iloc[:, :-1].values
-        print(X)
         y = self.dataset.iloc[:, -1].values
-        print(y)
         y = y.reshape(len(y), 1)
 
         # Split the dataset into train and test sets
@@ -168,10 +166,7 @@ class RegressionCustom:
     # Run random forest regression model - combines multiple trees based on sub-features and sub-samples, then takes the
     # average of all
     def run_random_forest_regression(self):
-        # Parameters of the model - the number of trees to build (estimators)
-        # model_grid_params = {'n_estimators': [10, 20, 50]}
         random_forest_regressor = RandomForestRegressor(random_state=42, n_estimators=50)
-        # grid_search_random_forest_reg = GridSearchCV(estimator=random_forest_regressor, param_grid=model_grid_params)
         # Train the best parameter's model (found by grid search algorithm) on the train set
         random_forest_regressor.fit(self.X_train, self.y_train)
         y_pred = self.scaler_y.inverse_transform(random_forest_regressor.predict(self.X_test))

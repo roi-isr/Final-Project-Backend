@@ -1,8 +1,9 @@
-from flask_restful import Resource, request
-from server.resources.sell import SellHandler
 from flask import jsonify
 from flask_jwt_extended import jwt_required
+from flask_restful import Resource, request
+
 from server.ML.ML_main import exec_predictions
+from server.resources.sell import SellHandler
 
 
 class PredRouter:

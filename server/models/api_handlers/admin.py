@@ -1,7 +1,7 @@
+import hashlib
+
 from server.database.queries.admin import *
 from .basic_handler import ApiHandler
-from flask import jsonify
-import hashlib
 
 
 class AdminHandler(ApiHandler):
