@@ -15,7 +15,7 @@ INSERT_SELL_QUERY = """INSERT INTO sell
                        RETURNING sell_id"""
 
 GET_SELL_ALL_QUERY = """SELECT sell_id, package_code, package_model, weight_in_carat, price_per_carat, buying_customer,
-                        sell_date, payment_method
+                        customer_phone, customer_mail, sell_date, payment_method
                         FROM sell
                         ORDER BY sell_date DESC"""
 

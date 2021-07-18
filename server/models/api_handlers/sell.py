@@ -14,7 +14,7 @@ class SellHandler(ApiHandler):
         super().__init__()
         self.named_values = ["sell_id", "package_code", "package_model",
                              "weight_in_carat", "price_per_carat", "buying_customer",
-                             "sell_date", "payment_method"]
+                             "customer_phone", "customer_mail", "sell_date", "payment_method"]
 
         self.customer_named_values = ["buying_customer", "customer_mail", "customer_phone"]
 
